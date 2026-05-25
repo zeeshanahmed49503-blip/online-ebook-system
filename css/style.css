@@ -1,0 +1,1671 @@
+@font-face {
+    font-family: 'normal'; 
+    src: url('fonts/NeueMontreal-Regular.woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'italic'; 
+    src: url('fonts/italic.woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Main Brand Palette */
+    --primary-dark: #1a1a1a;       /* Clean Dark Charcoal (Headings & Primary Text) */
+    --brand-accent: #5b5500;       /* Cool Sage Green (Links, Highlights, Accents) */
+    --cta-orange: #551700;         /* Terracotta/Orange (Primary Buttons, Action items) */
+    --bg-main: #fff7ec;            /* Soft Book-Paper Cream (Website background) */
+    --bg-card: #ffffff;            /* Pure White for clean card structures */
+    
+    /* Text Varieties */
+    --text-muted: #6b7280;         /* Slate Gray for secondary details/author names */
+    
+    /* Pastel Categories Grid Colors */
+    --pastel-purple: #e1d1fd;
+    --pastel-orange: #ffe5c1;
+    --pastel-blue: #cbe5ff;
+    --pastel-green: #c2f9f1;
+    --pastel-pink: #ffcdd6;
+    
+    /* Retro Graphics Colors */
+    --retro-yellow: #fcbf1e;
+    --retro-orange: #f26419;
+    --retro-red: #e63946;
+    --retro-purple: #7209b7;
+}
+
+body {
+    font-family: 'normal', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--primary-dark);
+    text-transform: capitalize;
+}
+
+/* CONTAINER CONSTRAINT */
+.app-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* 1. BRAND NAVIGATION HEADER */
+header {
+    background-color: var(--bg-card);
+    padding: 20px 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1300px;
+    margin: auto;
+}
+
+.brand-logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--primary-dark);
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover, nav ul li a.active {
+    color: var(--brand-accent);
+}
+
+.header-actions {
+    display: flex;
+    gap: 20px;
+    font-size: 18px;
+    color: var(--primary-dark);
+    cursor: pointer;
+}
+
+/* 2. HERO SPLIT CONTAINER */
+.hero-section {
+    background: linear-gradient(135deg, var(--bg-card) 70%, var(--pastel-orange) 30%);
+    padding: 60px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 40px;
+}
+
+.hero-left h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 25px;
+    color: var(--primary-dark);
+}
+
+.hero-left p {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 30px;
+    max-width: 480px;
+}
+
+.btn-prime {
+    background-color: var(--cta-orange);
+    color: var(--bg-card);
+    padding: 14px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    transition: opacity 0.3s ease;
+}
+
+.btn-prime:hover {
+    opacity: 0.9;
+}
+
+.hero-metrics {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.metrics-count {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.hero-right-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    max-width: 450px;
+    margin-left: auto;
+}
+
+.hero-book-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.hero-book-img img{
+    width: 100%;
+}
+
+.hero-right-card h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
+    color: var(--primary-dark);
+}
+
+.hero-right-card .author {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.slider-arrows {
+    display: flex;
+    gap: 10px;
+}
+
+.arrow-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: var(--bg-card);
+    color: var(--primary-dark);
+    transition: all 0.3s ease;
+}
+
+.arrow-btn:hover {
+    background-color: var(--primary-dark);
+    color: var(--bg-card);
+}
+
+/* 3. FEATURED BUBBLES SECTION */
+.featured-authors{
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+}
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    margin: 60px 0 30px 0;
+}
+
+.section-header h2 {
+       font-size: 32px;
+
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.view-all {
+    text-decoration: none;
+    color: var(--primary-dark);
+    font-weight: 600;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.view-all:hover {
+    color: var(--brand-accent);
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+.cat-card {
+    border-radius: 10px;
+    padding: 25px;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.featured-categories{
+    background-color: white;
+    padding: 20px 20px;
+    margin-top: 50px;
+    border-radius: 20px;
+}
+.cat-card:hover {
+    transform: translateY(-5px);
+}
+
+.cat-card.p1 { background-color: var(--pastel-purple); }
+.cat-card.p2 { background-color: var(--pastel-orange); }
+.cat-card.p3 { background-color: var(--pastel-blue); }
+.cat-card.p4 { background-color: var(--pastel-green); }
+.cat-card.p5 { background-color: var(--pastel-pink); }
+
+.cat-card i {
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: var(--primary-dark);
+}
+
+.cat-card h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+/* 4. TRENDING BOOKS SHOWCASE */
+.trending-books{
+    padding: 20px;
+    background-color: white;
+    border-radius: 20px;
+    margin-top: 50px;
+}
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
+}
+
+.book-card {
+    background: none;
+}
+
+.book-cover-wrap {
+    background-color: var(--pastel-orange);
+    border-radius: 8px;
+    /* padding: 20px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+    /* height: 280px; */
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.book-cover-wrap img {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+}
+
+.book-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--primary-dark);
+}
+
+.book-card .author {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.rating-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.book-price {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--primary-dark);
+}
+
+.book-rating {
+    font-size: 12px;
+    color: var(--retro-yellow);
+}
+
+.btn-bag {
+    width: 100%;
+    background-color: var(--primary-dark);
+    color: var(--bg-card);
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-bag:hover {
+    background-color: var(--brand-accent);
+}
+
+/* 5. AUDIO BOOKS FLEXIBLE ROW */
+.audio-books{
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 50px;
+}
+.audio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.audio-card {
+    background-color: var(--bg-card);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    position: relative;
+}
+
+.audio-img {
+    width: 70px;
+    height: 90px;
+    background-color: var(--bg-main);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.audio-img img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.audio-info h4 {
+    font-size: 15px;
+    margin-bottom: 4px;
+    color: var(--primary-dark);
+}
+
+.audio-info p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.audio-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.play-circle {
+    position: absolute;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: var(--bg-card);
+    color: var(--brand-accent);
+    transition: all 0.3s ease;
+}
+
+.play-circle:hover {
+    background-color: var(--brand-accent);
+    color: var(--bg-card);
+}
+
+/* 6. BANNER BANNER STRIP */
+.quote-banner {
+    background: linear-gradient(rgba(26,26,26,0.75), rgba(26,26,26,0.75)), url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1400') center/cover no-repeat;
+    border-radius: 12px;
+    padding: 60px;
+    text-align: center;
+    color: var(--bg-card);
+    margin: 60px 0;
+}
+
+.quote-banner h3 {
+    font-size: 26px;
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.5;
+    max-width: 800px;
+    margin: 0 auto 15px auto;
+}
+
+/* 7. AUTHORS GRID WITH BADGES */
+.authors-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+.author-card {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.author-img-box {
+    height: 220px;
+    background-color: var(--bg-main);
+}
+
+.author-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.author-details {
+    padding: 20px;
+    background: var(--bg-card);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    position: relative;
+}
+
+.author-details h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.author-details p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.follow-badge {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background-color: var(--brand-accent);
+    color: var(--bg-card);
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+/* 8. TRIPLE HIGHLIGHT BANNER CARDS */
+.highlight-banners-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 60px;
+}
+
+.hl-card {
+    border-radius: 12px;
+    padding: 35px;
+    color: var(--bg-card);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 180px;
+}
+.hl-card img{
+    border: 3px solid white;
+}
+
+.hl-card.c1 { background-color: var(--brand-accent); }
+.hl-card.c2 { background-color: var(--primary-dark); }
+.hl-card.c3 { background-color: var(--cta-orange); }
+
+
+
+.hl-btn {
+    background: rgba(255,255,255,0.2);
+    color: var(--bg-card);
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.4);
+    transition: background-color 0.3s;
+}
+
+.hl-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.hl-card img {
+    height: 110px;
+    object-fit: contain;
+}
+
+/* 9. UPCOMING BOOK GRID ALERT BLOCK */
+.upcoming-block {
+    background-color: white;
+    border-radius: 12px;
+    margin: 60px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    padding: 50px 20px;
+}
+
+.up-left {
+    /* padding: 20px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.up-left h2 {
+    font-size: 33px;
+    margin-bottom: 15px;
+    color: var(--primary-dark);
+}
+
+.up-left p {
+    color: var(--text-muted);
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    max-width: 550px;
+}
+
+.up-right-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    /* padding: 20px; */
+
+}
+
+.grid-mini-cover {
+    background-color: var(--bg-card);
+    border-radius: 6px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-mini-cover img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* 10. TESTIMONIAL CARDS ROW */
+.testimonials{
+    padding: 20px;
+    background-color: white;
+    border-radius: 20px;
+}
+.reviews-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.review-card {
+    border: 1.5px solid rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: 30px;
+    background: var(--bg-main);
+}
+
+.review-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.reviewer-profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rev-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.rev-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: var(--bg-main);
+}
+.rev-avatar img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+}
+
+.rev-name h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.rev-name p {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.stars {
+    color: var(--retro-yellow);
+    font-size: 12px;
+}
+
+/* 11. NEWSLETTER STRIP GRID */
+.newsletter-section {
+    background-color: var(--primary-dark);
+    border-radius: 12px;
+    padding: 50px;
+    color: var(--bg-card);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 60px 0;
+}
+
+.nl-left h2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.nl-left p {
+    font-size: 16px;
+    opacity: 0.8;
+    line-height: 1.5;
+    font-weight: lighter;
+    color: rgb(172, 172, 172);
+}
+
+.nl-form {
+    display: flex;
+    gap: 10px;
+    width: 45%;
+}
+
+.nl-form input {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: var(--bg-card);
+    color: var(--primary-dark);
+}
+
+.nl-form button {
+    background-color: var(--cta-orange);
+    color: var(--bg-card);
+    border: none;
+    padding: 0 25px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.nl-form button:hover {
+    background-color: var(--cta-orange);
+}
+footer {
+    background-color: #0b0c10; /* Ultra-slick deep premium black background */
+    width: 100%;
+    padding: 80px 0 40px 0; /* Padding inside top & bottom, sides handled by container */
+    color: #ffffff;
+    margin-top: 80px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08); /* Minimalist upper separation line */
+}
+
+/* 1300px Perfect Fluid Container */
+.footer-container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr repeat(4, 1fr);
+    gap: 50px;
+    margin-bottom: 60px;
+}
+
+/* Logo Alignment & Brand CSS */
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.footer-svg {
+    width: 30px;
+    height: 30px;
+}
+
+.footer-logo-side h3 {
+    font-family: 'normal', serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin: 0;
+}
+
+.footer-logo-side h3 span {
+    font-family: 'italic', serif;
+    font-weight: 300;
+    color: #ff7a00; /* Custom neon/retro accent orange */
+}
+
+.footer-logo-side p {
+    font-size: 14px;
+    color: #a0a5b5; /* Smooth muted text contrast on black */
+    max-width: 320px;
+    line-height: 1.8;
+    margin: 0 0 25px 0;
+}
+
+/* Social Media Handles */
+.social-icons {
+    display: flex;
+    gap: 12px;
+}
+
+.social-icons a {
+    width: 38px;
+    height: 38px;
+    background-color: rgba(255, 255, 255, 0.04);
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.social-icons a:hover {
+    background-color: #ff7a00;
+    color: #0b0c10;
+    border-color: #ff7a00;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(255, 122, 0, 0.3);
+}
+
+/* Columns & Headings Styling */
+.footer-col h4 {
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 25px 0;
+    color: #ffffff;
+    position: relative;
+}
+
+footer .brand-logo{
+    color: white;
+}
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 14px;
+}
+footer .fa-book-open {
+    color: var(--retro-orange);
+}
+
+.footer-col ul li a {
+    text-decoration: none;
+    color: #a0a5b5;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.footer-col ul li a i {
+    font-size: 13px;
+    color: rgba(255, 122, 0, 0.7);
+}
+
+.footer-col ul li a:hover {
+    color: #ff7a00;
+    transform: translateX(4px);
+}
+
+/* Footer Bottom Strip Styling */
+.footer-bottom {
+    text-align: center;
+    font-size: 13px;
+    color: #686d7a;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+/* RESPONSIVE LAYOUT RESPONSES */
+@media (max-width: 1024px) {
+    .footer-grid {
+        grid-template-columns: 1.5fr repeat(2, 1fr);
+        gap: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    footer {
+        padding: 60px 0 30px 0;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        text-align: center;
+    }
+    .footer-brand {
+        justify-content: center;
+    }
+    .footer-logo-side p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .social-icons {
+        justify-content: center;
+    }
+    .footer-col h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .footer-col ul li a {
+        justify-content: center;
+    }
+    .footer-col ul li a:hover {
+        transform: translateY(-2px);
+    }
+}
+/* ==================== UPDATED RETRO HERO STYLES ==================== */
+.retro-hero {
+    position: relative;
+    padding: 50px 0 0;
+    overflow: hidden;
+}
+
+.hero-content-wrapper {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 50px 20px;
+    background-color: white;
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    overflow: hidden;
+    z-index: 5;
+}
+.hero-content-wrapper::before{
+    content: "";
+    width: 100%;
+    height: 100%;
+    /* border-radius: 50%; */
+    background: linear-gradient(to left ,var(--bg-main), rgb(255, 255, 255));
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: -1;
+    /* filter: blur(50px); */
+}
+
+.hero-text-side { padding-bottom: 60px; }
+
+.hero-tagline { 
+    font-size: 10px; 
+    font-weight: 700; 
+    letter-spacing: 2px; 
+    color: var(--bg-card); 
+    background-color: rgba(0, 0, 0, 0.589);
+    width: max-content;
+    padding: 5px 10px;
+    border-radius: 0px 30px 30px 0;
+    display: block; 
+    margin-bottom: 10px; 
+}
+
+.hero-main-title { 
+    font-family: 'normal', serif; 
+    font-size: 68px; 
+    font-weight: 600; 
+    line-height: 1.15; 
+    color: var(--primary-dark); 
+    margin-bottom: 25px; 
+    max-width: 600px; 
+}
+
+.hero-main-title span { 
+    font-family: 'italic', serif; 
+    font-size: 68px; 
+    font-weight: lighter; 
+    line-height: 1.15; 
+    color: var(--retro-orange); 
+    margin-bottom: 25px; 
+    max-width: 550px; 
+}
+
+.hero-subtext { 
+    font-size: 15px; 
+    color: var(--text-muted); 
+    line-height: 1.7; 
+    margin-bottom: 35px; 
+    max-width: 440px; 
+}
+
+.hero-action-row { 
+    display: flex; 
+    gap: 12px; 
+    align-items: center; 
+    margin-bottom: 40px; 
+}
+
+.btn-explore {
+    background-color: var(--primary-dark);
+    color: var(--bg-card);
+    padding: 16px 36px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-explore:hover {
+    background-color: var(--retro-orange);
+    transform: translateY(-2px);
+}
+
+.btn-square-dots {
+    background-color: var(--primary-dark);
+    color: var(--bg-card);
+    border: none;
+    width: 52px;
+    height: 52px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-square-dots:hover { 
+    transform: scale(1.1); 
+    background-color: var(--retro-orange);
+}
+
+.hero-community-widget { display: flex; align-items: center; gap: 15px; }
+.avatar-stack { display: flex; }
+
+.mini-avatar-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 3px solid var(--bg-main);
+    margin-right: -12px;
+    object-fit: cover;
+}
+
+.hero-community-widget p { 
+    font-size: 13px; 
+    font-weight: 600; 
+    color: var(--primary-dark); 
+}
+
+.hero-graphics-side {
+    object-fit: cover;
+    height: 100%;
+}
+
+.hero-graphics-side img {
+    /* width: 100%; */
+    /* border-radius: 20px; */
+    max-height: 450px;
+}
+
+.shadow-effect {
+    box-shadow: 15px 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+.graphic-book-card {
+    border-radius: 4px;
+    padding: 16px;
+    transition: transform 0.4s ease-out, box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+/* Slanted Sage Green Book Card */
+.green-tilt {
+    position: absolute;
+    background-color: var(--brand-accent);
+    width: 260px;
+    height: 360px;
+    top: 15px;
+    left: 40px;
+    transform: rotate(-10deg);
+    z-index: 2;
+}
+
+.graphic-book-card:hover .book-cover-img { 
+    transform: scale(1.05); 
+}
+
+/* GEOMETRIC COLORED RETRO STEPS BASE */
+.retro-color-steps-container { 
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    margin-top: 30px; 
+}
+
+.step-strip { height: 18px; width: 100%; }
+.step-yellow { background-color: var(--retro-yellow); margin-left: 0; }
+.step-orange { background-color: var(--retro-orange); width: calc(100% - 40px); }
+.step-red { background-color: var(--retro-red); width: calc(100% - 100px); }
+.step-purple { background-color: var(--retro-purple); width: calc(100% - 180px); }
+
+/* MOBILE RESPONSIVE LAYER ADAPTATION BREAK */
+@media (max-width: 992px) {
+    .hero-content-wrapper { grid-template-columns: 1fr; text-align: center; gap: 20px; }
+    .hero-main-title { margin: 0 auto 20px auto; font-size: 42px; }
+    .hero-subtext { margin: 0 auto 30px auto; }
+    .hero-action-row, .hero-community-widget { justify-content: center; }
+    .hero-graphics-side { height: 420px; }
+    .green-tilt, .yellow-straight { width: 200px; height: 270px; }
+}
+
+/* =========================================================
+   GLOBAL STYLES FOR NEW SECTIONS (VARS INTEGRATED)
+   ========================================================= */
+.section-container {
+    max-width: 1320px; /* Hero wrapper size se match kiya */
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.section-title {
+    font-size: 28px; /* Baki sections se h2 font-size consistency match ki */
+    color: var(--primary-dark);
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 700;
+    text-align: left;
+}
+
+.section-subtitle {
+    font-size: 18px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 40px;
+    max-width: 600px;
+    line-height: 1.6;
+    text-align: left;
+    max-width: 700px;
+}
+
+/* =========================================================
+   1. COMPETITIONS SECTION STYLES 
+   ========================================================= */
+
+.competition-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 50px;
+    position: relative;
+}
+
+/* Title tweaking to match hero look */
+.competition-section .section-title {
+    font-family: 'normal', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: 12px;
+}
+
+.competition-section .section-title span {
+    font-family: 'italic', serif;
+    font-weight: lighter;
+    color: var(--retro-orange);
+}
+
+.comp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px; /* Spacing thodi badhai taake shadows overlap na karein */
+    margin-top: 40px;
+}
+
+/* Neo-Brutalist Comic Card Vibe */
+.comp-card {
+    background: linear-gradient(135deg, #ffffff 60%, var(--pastel-orange) 100%); 
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    border: 3px solid var(--primary-dark); /* Bold vintage solid border */
+    box-shadow: 10px 10px 0px var(--primary-dark); /* Playful raw shadow drop */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Fun subtle tilt variables to make grid feel organic */
+.dynamic-tilt-left { transform: rotate(-0.5deg); }
+.dynamic-tilt-right { transform: rotate(0.5deg); }
+
+/* Comic Press down effect on Hover */
+.comp-card:hover {
+    transform: translate(6px, 6px) rotate(0deg);
+    box-shadow: 4px 4px 0px var(--primary-dark);
+}
+
+/* Badge update */
+.comp-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 6px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 30px;
+    color: var(--bg-card);
+    border: 2px solid var(--primary-dark);
+    box-shadow: 3px 3px 0px var(--primary-dark);
+}
+
+.status-active { background-color: var(--retro-orange); } 
+.status-upcoming { background-color: var(--retro-purple); } /* Colored contrast */
+
+.comp-content {
+    padding: 40px 30px 30px 30px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.comp-content h3 {
+    font-family: 'normal', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 15px;
+    margin-top: 15px;
+    line-height: 1.2;
+}
+
+.comp-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 25px;
+    flex-grow: 1;
+    text-transform: none; /* Description text defaults back to normal casing */
+}
+
+/* Meta info boxes look like coupon cutouts */
+.comp-meta {
+    background: var(--bg-card);
+    padding: 18px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    font-size: 13px;
+    color: var(--primary-dark);
+    border: 2px dashed rgba(26, 26, 26, 0.2); /* Dashed retro border line */
+}
+
+.comp-meta span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.comp-meta span:last-child {
+    margin-bottom: 0;
+}
+
+.comp-meta span i {
+    color: var(--brand-accent);
+    font-size: 16px;
+    width: 20px;
+}
+
+/* Buttons Transformation */
+.comp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    border: 2px solid var(--primary-dark);
+    box-shadow: 4px 4px 0px var(--primary-dark);
+    transition: all 0.2s ease;
+}
+
+.competition-section .btn-primary {
+    background-color: var(--cta-orange);
+    color: var(--bg-card);
+}
+
+.competition-section .btn-primary:hover {
+    background-color: var(--retro-orange);
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--primary-dark);
+}
+
+.competition-section .btn-secondary {
+    background-color: var(--bg-main);
+    color: var(--primary-dark);
+}
+
+.competition-section .btn-secondary:hover {
+    background-color: var(--retro-yellow);
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--primary-dark);
+}
+
+/* Responsive Fix */
+@media (max-width: 992px) {
+    .comp-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+    .comp-card {
+        transform: none !important;
+    }
+}
+/* =/* =========================================================
+   UPDATED CREATIVE RETRO WINNERS SECTION
+   ========================================================= */
+.winners-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 50px;
+}
+
+.winners-section .section-title {
+    font-family: 'normal', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: 12px;
+}
+
+.winners-section .section-title span {
+    font-family: 'italic', serif;
+    font-weight: lighter;
+    color: var(--retro-orange);
+}
+
+.winners-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    margin-top: 40px;
+}
+
+/* Polaroid-Book Hybrid Card Design */
+.winner-card {
+    display: flex;
+    background: linear-gradient(135deg, #ffffff 70%, var(--pastel-blue) 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 3px solid var(--primary-dark);
+    box-shadow: 10px 10px 0px var(--primary-dark);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-tilt-left { transform: rotate(0.4deg); }
+.card-tilt-right { transform: rotate(-0.4deg); }
+
+.winner-card:hover {
+    transform: translate(5px, 5px) rotate(0deg);
+    box-shadow: 5px 5px 0px var(--primary-dark);
+}
+
+.winner-img-container {
+    width: 38%;
+    min-width: 140px;
+    background-color: var(--pastel-orange);
+    padding: 15px; /* Framing effect like a comic snapshot */
+    border-right: 3px solid var(--primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.winner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 2px solid var(--primary-dark);
+    border-radius: 8px;
+    box-shadow: 3px 3px 0px var(--primary-dark);
+}
+
+.winner-info {
+    padding: 30px;
+    width: 62%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.winner-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 30px;
+    margin-bottom: 15px;
+    border: 2px solid var(--primary-dark);
+    box-shadow: 2px 2px 0px var(--primary-dark);
+}
+
+.tag-current { background-color: var(--retro-yellow); color: var(--primary-dark); }
+.tag-previous { background-color: var(--pastel-purple); color: var(--primary-dark); }
+
+.winner-info h4 {
+    font-family: 'normal', sans-serif;
+    font-size: 24px;
+    color: var(--primary-dark);
+    margin: 0 0 4px 0;
+    font-weight: 700;
+}
+
+.winner-achievement {
+    font-size: 14px;
+    color: var(--retro-orange);
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    text-transform: capitalize;
+}
+
+/* Box element for rewards like coupon cutout */
+.winner-reward-box {
+    background: var(--bg-card);
+    border: 2px dashed rgba(26, 26, 26, 0.15);
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.winner-reward {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+    text-transform: none;
+}
+
+/* =========================================================
+   HIGH HIERARCHY GRADIENT DEALERS SECTION
+   ========================================================= */
+.dealers-section {
+    /* Super clean, aesthetic retro-light gradient background */
+    background: white;
+    padding: 20px 20px;
+    border-radius: 24px;
+    margin-top: 60px;
+    position: relative;
+}
+.dealers-section::after{
+    content: "";
+    width: 300px;
+    height: 300px;
+    background-color: orange;
+    position: absolute;
+    top: 0;
+    right: 0;
+    filter: blur(100px);
+    z-index: -1;
+    transition: 1s;
+}
+.dealers-section:hover::after{
+    content: "";
+    width: 500px;
+    height: 500px;
+    background-color: var(--retro-orange);
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    filter: blur(100px);
+    z-index: -1;
+}
+
+/* Clear Section Typography Hierarchy */
+.dealers-section .section-title {
+    font-family: 'normal', serif;
+    font-size: 32px; /* High Hierarchy */
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+
+
+.dealers-section .section-subtitle {
+    font-size: 16px; /* Highly visible text size */
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 760px;
+    /* margin: 0 auto 50px auto; */
+    text-align: left;
+}
+
+/* Grid Layout */
+.dealers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* Crisp Clean Card to pop out from the gradient */
+.dealer-card {
+    background: #ffffff; /* pure white for absolute contrast */
+    border-radius: 18px;
+    border: 3px solid var(--primary-dark);
+    box-shadow: 8px 8px 0px var(--primary-dark);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Balanced Hover State */
+.dealer-card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 14px 14px 0px var(--retro-orange);
+}
+
+/* Header styling within the card */
+.dealer-header {
+    background-color: #fafafa;
+    padding: 22px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 3px solid var(--primary-dark);
+}
+
+.dealer-icon {
+    font-size: 18px;
+    color: #ffffff;
+    background-color: var(--retro-orange); /* high-contrast accent pop */
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid var(--primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 2px 2px 0px var(--primary-dark);
+}
+
+.dealer-card h4 {
+    font-family: 'normal', sans-serif;
+    font-size: 18px; /* Prominent heading */
+    color: var(--primary-dark);
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* Body container */
+.dealer-body {
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.dealer-address {
+    font-size: 14px;
+    color: var(--primary-dark); /* darker shade for super clear text visibility */
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    flex-grow: 1;
+}
+
+/* Bottom stamped envelope meta row */
+.dealer-meta-wrapper {
+    background: #fafafa;
+    border: 2px dashed rgba(26, 26, 26, 0.15);
+    border-radius: 10px;
+    padding: 14px;
+}
+
+.dealer-contact, .dealer-timing {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dealer-contact i, .dealer-timing i {
+    font-size: 14px;
+    color: var(--primary-dark); /* clear micro icons */
+    width: 16px;
+}
+
+.dealer-meta-wrapper span {
+    color: var(--primary-dark);
+    font-weight: 600; /* bold phone numbers & time specs for readability */
+}
+
+/* Responsive Fixes */
+@media (max-width: 992px) {
+    .dealers-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .dealers-section .section-title {
+        font-size: 36px;
+    }
+}
