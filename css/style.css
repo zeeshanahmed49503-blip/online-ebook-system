@@ -81,6 +81,52 @@ header {
     gap: 10px;
     text-decoration: none;
 }
+/* Container alignment */
+.header-actions {
+    display: flex;
+    align-items: center;
+}
+
+/* Base button styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Login Button (Outline style so it doesn't fight for attention) */
+.btn-login {
+    color: var(--retro-orange); /* Change to your text color */
+    border: 1px solid var(--retro-orange);
+    background-color: transparent;
+    margin-right: -10px;
+}
+
+
+/* Register Button (Solid style to act as the main Call-to-Action) */
+.btn-register {
+    color: #ffffff;
+    background-color: var(--primary-dark); /* Replace with your primary brand color */
+    border: 1px solid var(--primary-dark);
+}
+
+.btn-register:hover {
+    color: black;
+    background-color: white; /* Slightly darker shade for hover */
+    border-color: black;
+}
+
+/* Responsive adjustment: makes sure icons look clean */
+.btn i {
+    font-size: 1rem;
+}
 
 nav ul {
     display: flex;
@@ -94,10 +140,6 @@ nav ul li a {
     font-weight: 500;
     font-size: 14px;
     transition: color 0.3s ease;
-}
-
-nav ul li a:hover, nav ul li a.active {
-    color: var(--brand-accent);
 }
 
 .header-actions {
@@ -1001,7 +1043,7 @@ footer .fa-book-open {
 
 .hero-tagline { 
     font-size: 10px; 
-    font-weight: 700; 
+    font-weight: lighter; 
     letter-spacing: 2px; 
     color: var(--bg-card); 
     background-color: rgba(0, 0, 0, 0.589);
@@ -1015,7 +1057,7 @@ footer .fa-book-open {
 .hero-main-title { 
     font-family: 'normal', serif; 
     font-size: 68px; 
-    font-weight: 600; 
+    font-weight: lighter; 
     line-height: 1.15; 
     color: var(--primary-dark); 
     margin-bottom: 25px; 
@@ -1144,10 +1186,10 @@ footer .fa-book-open {
     width: 100%; 
     display: flex; 
     flex-direction: column; 
-    margin-top: 30px; 
+    margin-top: 50px; 
 }
 
-.step-strip { height: 18px; width: 100%; }
+.step-strip { height: 20px; width: 100%; }
 .step-yellow { background-color: var(--retro-yellow); margin-left: 0; }
 .step-orange { background-color: var(--retro-orange); width: calc(100% - 40px); }
 .step-red { background-color: var(--retro-red); width: calc(100% - 100px); }

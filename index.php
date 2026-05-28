@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,25 +11,98 @@
     <title>Bookish - Online E-Book & Portal</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.fr{
+    color: green;
+    text-transform: uppercase;
+}
 
+.btn-icon {
+    position: relative;
+    font-size: 1.2rem;
+    color: var(--primary-dark);
+    text-decoration: none;
+}
+
+/* Cart badge setting */
+.cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -5px;
+    background-color: var(--retro-orange, #f26419);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: 600;
+}
+
+.btn-account {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--primary-dark);
+    font-weight: 500;
+}
+
+.btn-logout {
+    color: #e63946; /* Red color for logout */
+    font-size: 1.1rem;
+    transition: transform 0.2s ease;
+}
+
+.btn-logout:hover {
+    transform: scale(1.1);
+}
+    </style>
 </head>
 
 <body>
     <header>
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo"><i class="fa-solid fa-book-open logo-icon"></i>Bookish.</a>
+            <a href="index.php" class="brand-logo"><i class="fa-solid fa-book-open logo-icon"></i>Bookish.</a>
             <nav>
                 <ul>
-                    <li><a href="#" class="active">Our Store</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="#">Books</a></li>
-                    <li><a href="#">Recommendations</a></li>
+                    <li><a href="competitions.php">competitions</a></li>
+                    <li><a href="#">dealers</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
             </nav>
-            <div class="header-actions">
-                <i class="fa-regular fa-user" title="Profile"></i>
-                <i class="fa-solid fa-bag-shopping" title="View Cart"></i>
-            </div>
+  <div class="header-actions">
+    <?php
+    // Check karo kya session me user_id set hai (yaani user logged in hai)
+    if (isset($_SESSION['name'])) {
+    ?>
+        <a href="cart.php" class="btn btn-icon" title="Cart">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-badge">0</span>
+        </a>
+
+        <a href="account.php" class="btn btn-account" title="My Account">
+            <i class="fa-solid fa-circle-user"></i> 
+            <span><?php echo htmlspecialchars($_SESSION['name']); ?></span>
+        </a>
+    <?php
+    } else {
+    ?>
+        <a href="login.php" class="btn btn-login">
+            <i class="fa-solid fa-right-to-bracket"></i> Login
+        </a>
+        <a href="register.php" class="btn btn-register">
+            <i class="fa-solid fa-user-plus"></i> Register
+        </a>
+    <?php
+    }
+    ?>
+</div>
         </div>
     </header>
     <div class="app-container">
@@ -95,7 +172,7 @@
 
         <section class="trending-books">
             <div class="section-header">
-                <h2>Trending Books</h2>
+                <h2>New Releases</h2>
                 <div class="slider-arrows">
                     <a href="books.html" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
@@ -109,17 +186,17 @@
                         <span class="book-price">$20.00</span>
                         <span class="book-rating"><i class="fa-solid fa-star"></i> 4.5</span>
                     </div>
-                    <button class="btn-bag">Add to Bag</button>
+                    <button class="btn-bag">View Details</button>
                 </div>
                 <div class="book-card">
                     <div class="book-cover-wrap"><img src="images/ex2.webp" alt=""></div>
                     <h4>Neverwhere</h4>
                     <p class="author">Neil Gaiman</p>
                     <div class="rating-price-row">
-                        <span class="book-price">$25.00</span>
+                        <span class="book-price fr">free</span>
                         <span class="book-rating"><i class="fa-solid fa-star"></i> 4.8</span>
                     </div>
-                    <button class="btn-bag">Add to Bag</button>
+                    <button class="btn-bag">View Details</button>
                 </div>
                 <div class="book-card">
                     <div class="book-cover-wrap"><img src="images/ex3.webp" alt=""></div>
@@ -129,7 +206,7 @@
                         <span class="book-price">$26.00</span>
                         <span class="book-rating"><i class="fa-solid fa-star"></i> 4.7</span>
                     </div>
-                    <button class="btn-bag">Add to Bag</button>
+                    <button class="btn-bag">View Details</button>
                 </div>
                 <div class="book-card">
                     <div class="book-cover-wrap"><img src="images/ex4.webp" alt=""></div>
@@ -139,7 +216,7 @@
                         <span class="book-price">$26.00</span>
                         <span class="book-rating"><i class="fa-solid fa-star"></i> 4.9</span>
                     </div>
-                    <button class="btn-bag">Add to Bag</button>
+                    <button class="btn-bag">View Details</button>
                 </div>
                 <div class="book-card">
                     <div class="book-cover-wrap"><img src="images/ex5.webp" alt=""></div>
@@ -149,10 +226,71 @@
                         <span class="book-price">$33.00</span>
                         <span class="book-rating"><i class="fa-solid fa-star"></i> 4.1</span>
                     </div>
-                    <button class="btn-bag">Add to Bag</button>
+                    <button class="btn-bag">View Details</button>
                 </div>
             </div>
         </section>
+        <section class="trending-books">
+            <div class="section-header">
+                <h2>Highly Rated Books</h2>
+                <div class="slider-arrows">
+                    <a href="books.html" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="books-grid">
+                <div class="book-card">
+                    <div class="book-cover-wrap"><img src="images/ex1.webp" alt=""></div>
+                    <h4>The Order of Time</h4>
+                    <p class="author">Carlo Rovelli</p>
+                    <div class="rating-price-row">
+                        <span class="book-price">$20.00</span>
+                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.5</span>
+                    </div>
+                    <button class="btn-bag">View Details</button>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-wrap"><img src="images/ex2.webp" alt=""></div>
+                    <h4>Neverwhere</h4>
+                    <p class="author">Neil Gaiman</p>
+                    <div class="rating-price-row">
+                        <span class="book-price">$25.00</span>
+                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.8</span>
+                    </div>
+                    <button class="btn-bag">View Details</button>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-wrap"><img src="images/ex3.webp" alt=""></div>
+                    <h4>Ikigai</h4>
+                    <p class="author">Héctor García</p>
+                    <div class="rating-price-row">
+                        <span class="book-price">$26.00</span>
+                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.7</span>
+                    </div>
+                    <button class="btn-bag">View Details</button>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-wrap"><img src="images/ex4.webp" alt=""></div>
+                    <h4>We Are Not Free</h4>
+                    <p class="author">Traci Chee</p>
+                    <div class="rating-price-row">
+                        <span class="book-price">$26.00</span>
+                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.9</span>
+                    </div>
+                    <button class="btn-bag">View Details</button>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-wrap"><img src="images/ex5.webp" alt=""></div>
+                    <h4>The Witch</h4>
+                    <p class="author">Salem Author</p>
+                    <div class="rating-price-row">
+                        <span class="book-price">$33.00</span>
+                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.1</span>
+                    </div>
+                    <button class="btn-bag">View Details</button>
+                </div>
+            </div>
+        </section>
+
         <section class="competition-section">
             <div class="section-container">
                 <h2 class="section-title">Ongoing & Competition</h2>
@@ -170,7 +308,7 @@
                                 <span><i class="fa-solid fa-trophy"></i> <strong>Prize:</strong> Famous G.K. & Grammar
                                     Book Bundle</span>
                             </div>
-                            <a href="competitions.html" class="comp-btn btn-primary">Participate Now <i
+                            <a href="competitions.php" class="comp-btn btn-primary">Participate Now <i
                                     class="fa-solid fa-arrow-right-long"></i></a>
                         </div>
                     </div>
@@ -188,7 +326,7 @@
                                 <span><i class="fa-solid fa-award"></i> <strong>Prize:</strong> Cash Prize & Journal
                                     Feature</span>
                             </div>
-                            <a href="competitions.html" class="comp-btn btn-secondary">View Rules</a>
+                            <a href="competitions.php" class="comp-btn btn-secondary">View Rules</a>
                         </div>
                     </div>
                 </div>
@@ -266,7 +404,7 @@
 
         <section class="upcoming-block">
             <div class="up-left">
-                <h2>Upcoming Book Alert...</h2>
+                <h2>Upcoming Book Alert</h2>
                 <p>Get 35% off for fast pre-booking of any local Est, soluta provident explicabo iusto itaque nemo ipsam
                     odit eos ipsa accusantium? or global author releases coming next week.</p>
                 <a href="#" class="btn-prime" style="width:fit-content;">Notify me <i class="fa-solid fa-bell"></i></a>
