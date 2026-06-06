@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,27 +11,60 @@
     <title>Bookish - Online E-Book & Portal</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.fr{
+    color: green;
+    text-transform: uppercase;
+}
 
+.btn-icon {
+    position: relative;
+    font-size: 1.2rem;
+    color: var(--primary-dark);
+    text-decoration: none;
+}
+
+/* Cart badge setting */
+.cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -5px;
+    background-color: var(--retro-orange, #f26419);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: 600;
+}
+
+.btn-account {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--primary-dark);
+    font-weight: 500;
+}
+
+.btn-logout {
+    color: #e63946; /* Red color for logout */
+    font-size: 1.1rem;
+    transition: transform 0.2s ease;
+}
+
+.btn-logout:hover {
+    transform: scale(1.1);
+}
+    </style>
 </head>
 
 <body>
-    <header>
-        <div class="nav-wrapper">
-            <a href="#" class="brand-logo"><i class="fa-solid fa-book-open logo-icon"></i>Bookish.</a>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Our Store</a></li>
-                    <li><a href="#">Books</a></li>
-                    <li><a href="#">Recommendations</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                <i class="fa-regular fa-user" title="Profile"></i>
-                <i class="fa-solid fa-bag-shopping" title="View Cart"></i>
-            </div>
-        </div>
-    </header>
+<?php include 'navbar.php'; ?>
     <div class="app-container">
 
 
@@ -76,26 +113,26 @@
             </div>
             <div class="categories-grid">
                 <div class="cat-card p1"><i class="fa-solid fa-wand-magic-sparkles"></i>
-                    <h4>Fantasy</h4>
+                    <h4>Novels</h4>
                 </div>
                 <div class="cat-card p2"><i class="fa-solid fa-heart"></i>
-                    <h4>Romance</h4>
+                    <h4>Comics</h4>
                 </div>
                 <div class="cat-card p3"><i class="fa-solid fa-mask"></i>
-                    <h4>Mystery</h4>
+                    <h4>GK & Science</h4>
                 </div>
                 <div class="cat-card p4"><i class="fa-solid fa-brain"></i>
-                    <h4>Personal Growth</h4>
+                    <h4>Story Books</h4>
                 </div>
                 <div class="cat-card p5"><i class="fa-solid fa-user-shield"></i>
-                    <h4>History</h4>
+                    <h4>Journals</h4>
                 </div>
             </div>
         </section>
 
         <section class="trending-books">
             <div class="section-header">
-                <h2>Trending Books</h2>
+                <h2>New Releases</h2>
                 <div class="slider-arrows">
                     <a href="books.html" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
@@ -109,17 +146,17 @@
                         <span class="book-price">$20.00</span>
                         <span class="book-rating"><i class="fa-solid fa-star"></i> 4.5</span>
                     </div>
-                    <button class="btn-bag">Add to Bag</button>
+                    <button class="btn-bag">View Details</button>
                 </div>
                 <div class="book-card">
                     <div class="book-cover-wrap"><img src="images/ex2.webp" alt=""></div>
                     <h4>Neverwhere</h4>
                     <p class="author">Neil Gaiman</p>
                     <div class="rating-price-row">
-                        <span class="book-price">$25.00</span>
+                        <span class="book-price fr">free</span>
                         <span class="book-rating"><i class="fa-solid fa-star"></i> 4.8</span>
                     </div>
-                    <button class="btn-bag">Add to Bag</button>
+                    <button class="btn-bag">View Details</button>
                 </div>
                 <div class="book-card">
                     <div class="book-cover-wrap"><img src="images/ex3.webp" alt=""></div>
@@ -129,7 +166,7 @@
                         <span class="book-price">$26.00</span>
                         <span class="book-rating"><i class="fa-solid fa-star"></i> 4.7</span>
                     </div>
-                    <button class="btn-bag">Add to Bag</button>
+                    <button class="btn-bag">View Details</button>
                 </div>
                 <div class="book-card">
                     <div class="book-cover-wrap"><img src="images/ex4.webp" alt=""></div>
@@ -139,7 +176,7 @@
                         <span class="book-price">$26.00</span>
                         <span class="book-rating"><i class="fa-solid fa-star"></i> 4.9</span>
                     </div>
-                    <button class="btn-bag">Add to Bag</button>
+                    <button class="btn-bag">View Details</button>
                 </div>
                 <div class="book-card">
                     <div class="book-cover-wrap"><img src="images/ex5.webp" alt=""></div>
@@ -149,10 +186,71 @@
                         <span class="book-price">$33.00</span>
                         <span class="book-rating"><i class="fa-solid fa-star"></i> 4.1</span>
                     </div>
-                    <button class="btn-bag">Add to Bag</button>
+                    <button class="btn-bag">View Details</button>
                 </div>
             </div>
         </section>
+        <section class="trending-books">
+            <div class="section-header">
+                <h2>Highly Rated Books</h2>
+                <div class="slider-arrows">
+                    <a href="books.html" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="books-grid">
+                <div class="book-card">
+                    <div class="book-cover-wrap"><img src="images/ex1.webp" alt=""></div>
+                    <h4>The Order of Time</h4>
+                    <p class="author">Carlo Rovelli</p>
+                    <div class="rating-price-row">
+                        <span class="book-price">$20.00</span>
+                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.5</span>
+                    </div>
+                    <button class="btn-bag">View Details</button>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-wrap"><img src="images/ex2.webp" alt=""></div>
+                    <h4>Neverwhere</h4>
+                    <p class="author">Neil Gaiman</p>
+                    <div class="rating-price-row">
+                        <span class="book-price">$25.00</span>
+                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.8</span>
+                    </div>
+                    <button class="btn-bag">View Details</button>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-wrap"><img src="images/ex3.webp" alt=""></div>
+                    <h4>Ikigai</h4>
+                    <p class="author">Héctor García</p>
+                    <div class="rating-price-row">
+                        <span class="book-price">$26.00</span>
+                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.7</span>
+                    </div>
+                    <button class="btn-bag">View Details</button>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-wrap"><img src="images/ex4.webp" alt=""></div>
+                    <h4>We Are Not Free</h4>
+                    <p class="author">Traci Chee</p>
+                    <div class="rating-price-row">
+                        <span class="book-price">$26.00</span>
+                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.9</span>
+                    </div>
+                    <button class="btn-bag">View Details</button>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-wrap"><img src="images/ex5.webp" alt=""></div>
+                    <h4>The Witch</h4>
+                    <p class="author">Salem Author</p>
+                    <div class="rating-price-row">
+                        <span class="book-price">$33.00</span>
+                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.1</span>
+                    </div>
+                    <button class="btn-bag">View Details</button>
+                </div>
+            </div>
+        </section>
+
         <section class="competition-section">
             <div class="section-container">
                 <h2 class="section-title">Ongoing & Competition</h2>
@@ -170,7 +268,7 @@
                                 <span><i class="fa-solid fa-trophy"></i> <strong>Prize:</strong> Famous G.K. & Grammar
                                     Book Bundle</span>
                             </div>
-                            <a href="competitions.html" class="comp-btn btn-primary">Participate Now <i
+                            <a href="competitions.php" class="comp-btn btn-primary">Participate Now <i
                                     class="fa-solid fa-arrow-right-long"></i></a>
                         </div>
                     </div>
@@ -188,7 +286,7 @@
                                 <span><i class="fa-solid fa-award"></i> <strong>Prize:</strong> Cash Prize & Journal
                                     Feature</span>
                             </div>
-                            <a href="competitions.html" class="comp-btn btn-secondary">View Rules</a>
+                            <a href="competitions.php" class="comp-btn btn-secondary">View Rules</a>
                         </div>
                     </div>
                 </div>
@@ -235,94 +333,58 @@
             </div>
         </section>
 
+        <section class="competition-section upcoming-section" style="padding-top: 0;">
+    <div class="section-container">
+        <h2 class="section-title">Upcoming Competitions</h2>
+        <p class="section-subtitle">Prepare your drafts early, sharpen your skills, and get ready to compete with the finest writers for massive prizes and global recognition!</p>
+        
+        <div class="comp-grid">
+
+            <div class="comp-card dynamic-tilt-left">
+                <div class="comp-badge" style="background-color: #f77f00; color: #ffffff;">Starting on June 05, 2026</div>
+                <div class="comp-content">
+                    <h3>G.K &amp; Literature Mega Quiz</h3>
+                    <p class="comp-desc">Test your rapid-fire skills! A fast-paced online quiz covering global literature, famous authors, and core grammar concepts. Accuracy and speed will decide the winner.</p>
+                    
+                    <div class="comp-meta">
+                        <span><i class="fa-regular fa-calendar"></i> <strong>Launch Date:</strong> June 05, 2026</span>
+                        <span><i class="fa-solid fa-trophy"></i> <strong>Prize:</strong> Premium E-Reader &amp; Certificate</span>
+                    </div>
+
+                    <a href="javascript:void(0)" class="comp-btn btn-secondary" style="cursor: not-allowed; background-color: #6c757d; color: #ffffff;">
+                        <i class="fa-solid fa-lock"></i> Registration Opening Soon
+                    </a>
+                </div>
+            </div>
+
+            <div class="comp-card dynamic-tilt-right">
+                <div class="comp-badge" style="background-color: #f77f00; color: #ffffff;">Starting on June 15, 2026</div>
+                <div class="comp-content">
+                    <h3>Novella Chapter Showcase</h3>
+                    <p class="comp-desc">An elite platform for budding authors. Submit the opening chapter of your unpublished book/novella. Top entries get expert mentoring from premium publishers.</p>
+                    
+                    <div class="comp-meta">
+                        <span><i class="fa-regular fa-calendar"></i> <strong>Launch Date:</strong> June 15, 2026</span>
+                        <span><i class="fa-solid fa-award"></i> <strong>Prize:</strong> Official Contract &amp; Hard Copy Publication</span>
+                    </div>
+
+                    <a href="javascript:void(0)" class="comp-btn btn-secondary" style="cursor: not-allowed; background-color: #6c757d; color: #ffffff;">
+                        <i class="fa-solid fa-lock"></i> Registration Opening Soon
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
 
         <section class="quote-banner">
             <h3>"I do believe something very magical can happen <br> when you read a good book."</h3>
             <p>( J.K - Rowling )</p>
         </section>
 
-
-
-        <section class="highlight-banners-grid">
-            <div class="hl-card c1">
-                <div class="hl-left">
-                    <h3>New Release</h3><br><a href="#" class="hl-btn">Read Now</a>
-                </div>
-                <img src="images/ex3.webp" alt="">
-            </div>
-            <div class="hl-card c2">
-                <div class="hl-left">
-                    <h3>Sale on History Books</h3><br><a href="#" class="hl-btn">Shop Sale</a>
-                </div>
-                <img src="images/ex2.webp" alt="">
-            </div>
-            <div class="hl-card c3">
-                <div class="hl-left">
-                    <h3>Top Rated Hub</h3><br><a href="#" class="hl-btn">Explore</a>
-                </div>
-                <img src="images/ex4.webp" alt="">
-            </div>
-        </section>
-
-        <section class="upcoming-block">
-            <div class="up-left">
-                <h2>Upcoming Book Alert...</h2>
-                <p>Get 35% off for fast pre-booking of any local Est, soluta provident explicabo iusto itaque nemo ipsam
-                    odit eos ipsa accusantium? or global author releases coming next week.</p>
-                <a href="#" class="btn-prime" style="width:fit-content;">Notify me <i class="fa-solid fa-bell"></i></a>
-            </div>
-            <div class="up-right-grid">
-                <div class="grid-mini-cover"><img src="images/ex1.webp" alt=""></div>
-                <div class="grid-mini-cover"><img src="images/ex3.webp" alt=""></div>
-                <div class="grid-mini-cover"><img src="images/ex2.webp" alt=""></div>
-                <div class="grid-mini-cover"><img src="images/ex4.webp" alt=""></div>
-            </div>
-        </section>
-
-        <section class="testimonials">
-            <div class="section-header">
-                <h2>Customer Feedback</h2>
-                <div class="slider-arrows">
-                    <div class="arrow-btn"><i class="fa-solid fa-chevron-left"></i></div>
-                    <div class="arrow-btn"><i class="fa-solid fa-chevron-right"></i></div>
-                </div>
-            </div>
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <p class="review-text">"Bookish is a breath of fresh air in today's digital media arena. The digital
-                        asset catalog format options (PDF, Hard Copy, CD) makes it extremely easy to adapt according to
-                        my mood."</p>
-                    <div class="reviewer-profile">
-                        <div class="rev-info">
-                            <div class="rev-avatar"><img src="images/pr2.webp" alt=""></div>
-                            <div class="rev-name">
-                                <h4>Rylars Fixas</h4>
-                                <p>Publishing Consultant</p>
-                            </div>
-                        </div>
-                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                class="fa-solid fa-star"></i></div>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <p class="review-text">"I am especially in love with the competitive execution layout module.
-                        Authentic timers make the contest interface highly trustworthy and premium."</p>
-                    <div class="reviewer-profile">
-                        <div class="rev-info">
-                            <div class="rev-avatar"><img src="images/pr3.webp" alt=""></div>
-                            <div class="rev-name">
-                                <h4>Tyntia Ravling</h4>
-                                <p>Kids Father, Pakistan</p>
-                            </div>
-                        </div>
-                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                class="fa-solid fa-star"></i></div>
-                    </div>
-                </div>
-            </div>
-        </section>
         <section class="dealers-section">
             <div class="section-container">
                 <h2 class="section-title">Find a <span>Dealer</span> Near You</h2>
@@ -380,16 +442,6 @@
                     </div>
                 </div>
             </div>
-        </section>
-        <section class="newsletter-section">
-            <div class="nl-left">
-                <h2>Subscribe to our Newsletter</h2>
-                <p>Subscribe to our newsletter to receive early updates, <br> coupon discounts, and weekly logs.</p>
-            </div>
-            <form class="nl-form" onsubmit="event.preventDefault();">
-                <input type="email" placeholder="Enter your email">
-                <button type="submit">Subscribe</button>
-            </form>
         </section>
 
     </div>
