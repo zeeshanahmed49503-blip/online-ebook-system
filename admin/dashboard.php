@@ -90,8 +90,8 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
             <a class="nav-link" href="viewBooks.php"><i class="fa-solid fa-book"></i> View All Books</a>
             <a class="nav-link" href="#"><i class="fa-solid fa-shopping-cart"></i> Manage Orders</a>
             <a class="nav-link" href="#"><i class="fa-solid fa-users"></i> Book Dealers</a>
-            <a class="nav-link" href="#"><i class="fa-solid fa-trophy"></i> Winners Board</a>
-            <a class="nav-link text-danger mt-5" href="logout.php"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
+            <a class="nav-link" href="competition.php"><i class="fa-solid fa-trophy"></i>Competitions</a>
+            <a class="nav-link" href="winners.php"><i class="fa-solid fa-trophy"></i>Winners</a>
         </nav>
     </aside>
 

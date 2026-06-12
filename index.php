@@ -1,5 +1,8 @@
 <?php
     session_start();
+    include 'auth.php';
+    $comp_query = "SELECT * FROM competitions WHERE status = 'active' ORDER BY id ASC LIMIT 2";
+$comp_result = mysqli_query($conn, $comp_query);
 ?>
 
 <!DOCTYPE html>
@@ -66,8 +69,6 @@
 <body>
 <?php include 'navbar.php'; ?>
     <div class="app-container">
-
-
         <section class="retro-hero">
             <div class="hero-content-wrapper">
                 <div class="hero-text-side">
@@ -190,6 +191,7 @@
                 </div>
             </div>
         </section>
+        
         <section class="trending-books">
             <div class="section-header">
                 <h2>Highly Rated Books</h2>
@@ -251,47 +253,39 @@
             </div>
         </section>
 
-        <section class="competition-section">
-            <div class="section-container">
-                <h2 class="section-title">Ongoing & Competition</h2>
-                <p class="section-subtitle">Unleash your inner writer! Participate in our exciting writing contests to
-                    showcase your creative skills, compete with the finest minds ...</p>
-                <div class="comp-grid">
-                    <div class="comp-card dynamic-tilt-left">
-                        <div class="comp-badge status-active">Active Now</div>
-                        <div class="comp-content">
-                            <h3>Annual Essay Writing</h3>
-                            <p class="comp-desc">Access the separate window topic, write, and submit your essay within a
-                                strict 3-hour window. Show your skills in grammar, structure, and general knowledge!</p>
-                            <div class="comp-meta">
-                                <span><i class="fa-regular fa-clock"></i> <strong>Time Limit:</strong> 3 Hours</span>
-                                <span><i class="fa-solid fa-trophy"></i> <strong>Prize:</strong> Famous G.K. & Grammar
-                                    Book Bundle</span>
-                            </div>
-                            <a href="competitions.php" class="comp-btn btn-primary">Participate Now <i
-                                    class="fa-solid fa-arrow-right-long"></i></a>
+         <section class="competition-section">
+    <div class="section-container">
+        <h2 class="section-title">Ongoing Competitions</h2>
+        <p class="section-subtitle">Join our exciting writing contests!</p>
+        
+        <div class="comp-grid">
+            <?php
+            $comp_query = "SELECT * FROM competitions WHERE status = 'active' ORDER BY id ASC LIMIT 2";
+            $comp_result = mysqli_query($conn, $comp_query);
+            
+            while ($comp_row = mysqli_fetch_assoc($comp_result)) {
+            ?>
+                <div class="comp-card">
+                    <div class="comp-badge status-active"><?php echo $comp_row['status']; ?></div>
+                    <div class="comp-content">
+                        <h3><?php echo $comp_row['title']; ?></h3>
+                        <p class="comp-desc"><?php echo $comp_row['description']; ?></p>
+                        
+                        <div class="comp-meta">
+                            <span><i class="fa-solid fa-clock"></i> <strong>Deadline:</strong> <?php echo $comp_row['deadline']; ?></span>
+                            <span><i class="fa-solid fa-trophy"></i> <strong>Prize:</strong> <?php echo $comp_row['reward']; ?></span>
                         </div>
-                    </div>
-
-                    <div class="comp-card dynamic-tilt-right">
-                        <div class="comp-badge status-upcoming">Commencing Soon</div>
-
-                        <div class="comp-content">
-                            <h3>Short Story Writing</h3>
-                            <p class="comp-desc">Submit your best creative stories online in document format. The best
-                                selected story will be officially published in our upcoming monthly journal!</p>
-                            <div class="comp-meta">
-                                <span><i class="fa-regular fa-calendar"></i> <strong>Commencing:</strong> Coming Next
-                                    Week</span>
-                                <span><i class="fa-solid fa-award"></i> <strong>Prize:</strong> Cash Prize & Journal
-                                    Feature</span>
-                            </div>
-                            <a href="competitions.php" class="comp-btn btn-secondary">View Rules</a>
-                        </div>
+                        
+                        <a href="competitions.php" class="comp-btn btn-primary">
+                            View Competition <i class="fa-solid fa-arrow-right-long"></i>
+                        </a>
                     </div>
                 </div>
-            </div>
-        </section>
+            <?php } ?>
+        </div>
+    </div>
+</section>
+
 
         <section class="winners-section">
             <div class="section-container">
