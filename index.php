@@ -1,8 +1,17 @@
 <?php
-    session_start();
-    include 'auth.php';
-    $comp_query = "SELECT * FROM competitions WHERE status = 'active' ORDER BY id ASC LIMIT 2";
+include 'auth.php'; // Database connection ($conn) iske andar hona chahiye
+
+// 1. Competitions Data Query
+$comp_query = "SELECT * FROM competitions WHERE status = 'active' ORDER BY id ASC LIMIT 2";
 $comp_result = mysqli_query($conn, $comp_query);
+
+// 2. New Releases Books Query (Sabse latest 5 books uthane ke liye)
+$new_books_query = "SELECT * FROM books ORDER BY id DESC LIMIT 5";
+$new_books_result = mysqli_query($conn, $new_books_query);
+
+// 3. Highly Rated Books Query (Aapke schema ke mutabiq dynamic order)
+$rated_books_query = "SELECT * FROM books ORDER BY id ASC LIMIT 5";
+$rated_books_result = mysqli_query($conn, $rated_books_query);
 ?>
 
 <!DOCTYPE html>
@@ -16,53 +25,92 @@ $comp_result = mysqli_query($conn, $comp_query);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-.fr{
-    color: green;
-    text-transform: uppercase;
-}
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .fr {
+            color: #2a9d8f !important;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
 
-.btn-icon {
-    position: relative;
-    font-size: 1.2rem;
-    color: var(--primary-dark);
-    text-decoration: none;
-}
+        .btn-icon {
+            position: relative;
+            font-size: 1.2rem;
+            color: var(--primary-dark);
+            text-decoration: none;
+        }
 
-/* Cart badge setting */
-.cart-badge {
-    position: absolute;
-    top: -4px;
-    right: -5px;
-    background-color: var(--retro-orange, #f26419);
-    color: white;
-    font-size: 0.7rem;
-    padding: 2px 6px;
-    border-radius: 50%;
-    font-weight: 600;
-}
+        /* Cart badge setting */
+        .cart-badge {
+            position: absolute;
+            top: -4px;
+            right: -5px;
+            background-color: var(--retro-orange, #f26419);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-weight: 600;
+        }
 
-.btn-account {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    color: var(--primary-dark);
-    font-weight: 500;
-}
+        .btn-account {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--primary-dark);
+            font-weight: 500;
+        }
 
-.btn-logout {
-    color: #e63946; /* Red color for logout */
-    font-size: 1.1rem;
-    transition: transform 0.2s ease;
-}
+        .btn-logout {
+            color: #e63946; /* Red color for logout */
+            font-size: 1.1rem;
+            transition: transform 0.2s ease;
+        }
 
-.btn-logout:hover {
-    transform: scale(1.1);
-}
+        .btn-logout:hover {
+            transform: scale(1.1);
+        }
+
+        /* Brutalist Style Adjustment to match storefront exactly */
+        .book-cover-wrap {
+            width: 100%;
+            height: 350px; 
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 2px solid var(--primary-dark, #000);
+            overflow: hidden;
+            background-color: #f8f9fa;
+        }
+        .book-cover-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+        }
+        
+        .btn-bag {
+            width: 100%;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 6px;
+            border: 2px solid var(--primary-dark, #000);
+            background: #fff;
+            color: var(--primary-dark, #000);
+            box-shadow: 2px 2px 0px var(--primary-dark, #000);
+            display: inline-block;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .btn-bag:hover {
+            background: var(--retro-yellow, #fff9e6);
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0px var(--primary-dark, #000);
+        }
     </style>
 </head>
 
@@ -78,7 +126,7 @@ $comp_result = mysqli_query($conn, $comp_query);
                         With Our Editors.</p>
 
                     <div class="hero-action-row">
-                        <a href="#" class="btn-explore">Explore Now</a>
+                        <a href="books.php" class="btn-explore">Explore Now</a>
                         <button class="btn-square-dots"><i class="fa-solid fa-ellipsis"></i></button>
                     </div>
 
@@ -94,9 +142,7 @@ $comp_result = mysqli_query($conn, $comp_query);
 
                 <div class="hero-graphics-side">
                     <img src="images/banners/landing.webp" alt="">
-
                 </div>
-
             </div>
 
             <div class="retro-color-steps-container">
@@ -110,22 +156,22 @@ $comp_result = mysqli_query($conn, $comp_query);
         <section class="featured-categories">
             <div class="section-header">
                 <h2>Featured Categories</h2>
-                <a href="#" class="view-all">All Categories <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="books.php" class="view-all">All Categories <i class="fa-solid fa-arrow-right"></i></a>
             </div>
             <div class="categories-grid">
-                <div class="cat-card p1"><i class="fa-solid fa-wand-magic-sparkles"></i>
+                <div class="cat-card p1" onclick="window.location.href='books.php?category=Novels'" style="cursor:pointer;"><i class="fa-solid fa-wand-magic-sparkles"></i>
                     <h4>Novels</h4>
                 </div>
-                <div class="cat-card p2"><i class="fa-solid fa-heart"></i>
+                <div class="cat-card p2" onclick="window.location.href='books.php?category=Comics'" style="cursor:pointer;"><i class="fa-solid fa-heart"></i>
                     <h4>Comics</h4>
                 </div>
-                <div class="cat-card p3"><i class="fa-solid fa-mask"></i>
+                <div class="cat-card p3" onclick="window.location.href='books.php?category=Academic'" style="cursor:pointer;"><i class="fa-solid fa-mask"></i>
                     <h4>GK & Science</h4>
                 </div>
-                <div class="cat-card p4"><i class="fa-solid fa-brain"></i>
+                <div class="cat-card p4" onclick="window.location.href='books.php'" style="cursor:pointer;"><i class="fa-solid fa-brain"></i>
                     <h4>Story Books</h4>
                 </div>
-                <div class="cat-card p5"><i class="fa-solid fa-user-shield"></i>
+                <div class="cat-card p5" onclick="window.location.href='books.php'" style="cursor:pointer;"><i class="fa-solid fa-user-shield"></i>
                     <h4>Journals</h4>
                 </div>
             </div>
@@ -135,60 +181,37 @@ $comp_result = mysqli_query($conn, $comp_query);
             <div class="section-header">
                 <h2>New Releases</h2>
                 <div class="slider-arrows">
-                    <a href="books.html" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="books.php" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
             <div class="books-grid">
-                <div class="book-card">
-                    <div class="book-cover-wrap"><img src="images/ex1.webp" alt=""></div>
-                    <h4>The Order of Time</h4>
-                    <p class="author">Carlo Rovelli</p>
-                    <div class="rating-price-row">
-                        <span class="book-price">$20.00</span>
-                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.5</span>
-                    </div>
-                    <button class="btn-bag">View Details</button>
-                </div>
-                <div class="book-card">
-                    <div class="book-cover-wrap"><img src="images/ex2.webp" alt=""></div>
-                    <h4>Neverwhere</h4>
-                    <p class="author">Neil Gaiman</p>
-                    <div class="rating-price-row">
-                        <span class="book-price fr">free</span>
-                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.8</span>
-                    </div>
-                    <button class="btn-bag">View Details</button>
-                </div>
-                <div class="book-card">
-                    <div class="book-cover-wrap"><img src="images/ex3.webp" alt=""></div>
-                    <h4>Ikigai</h4>
-                    <p class="author">Héctor García</p>
-                    <div class="rating-price-row">
-                        <span class="book-price">$26.00</span>
-                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.7</span>
-                    </div>
-                    <button class="btn-bag">View Details</button>
-                </div>
-                <div class="book-card">
-                    <div class="book-cover-wrap"><img src="images/ex4.webp" alt=""></div>
-                    <h4>We Are Not Free</h4>
-                    <p class="author">Traci Chee</p>
-                    <div class="rating-price-row">
-                        <span class="book-price">$26.00</span>
-                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.9</span>
-                    </div>
-                    <button class="btn-bag">View Details</button>
-                </div>
-                <div class="book-card">
-                    <div class="book-cover-wrap"><img src="images/ex5.webp" alt=""></div>
-                    <h4>The Witch</h4>
-                    <p class="author">Salem Author</p>
-                    <div class="rating-price-row">
-                        <span class="book-price">$33.00</span>
-                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.1</span>
-                    </div>
-                    <button class="btn-bag">View Details</button>
-                </div>
+                <?php 
+                if (mysqli_num_rows($new_books_result) > 0) {
+                    while ($row = mysqli_fetch_assoc($new_books_result)) {
+                        $cover = (!empty($row['cover_image'])) ? $row['cover_image'] : 'default_cover.jpg';
+                        // Dynamic rating setup placeholder 
+                        $rating = '4.6';
+                ?>
+                        <div class="book-card">
+                            <div class="book-cover-wrap">
+                                <img src="uploads/covers/<?php echo $cover; ?>" alt="Book Cover" onerror="this.src='https://placehold.co/250x300/f26419/ffffff?text=<?php echo urlencode($row['title']); ?>'">
+                            </div>
+                            <h4 style="font-size: 16px; font-weight:800; margin-bottom:4px;"><?php echo htmlspecialchars($row['title']); ?></h4>
+                            <p class="author" style="margin-bottom:8px;">By <?php echo htmlspecialchars($row['author']); ?></p>
+                            <div class="rating-price-row" style="margin-bottom: 12px;">
+                                <span class="book-price <?php echo ($row['price'] == 0) ? 'fr' : ''; ?>">
+                                    <?php echo ($row['price'] == 0) ? 'FREE' : 'Rs. ' . number_format($row['price'], 0); ?>
+                                </span>
+                                <span class="book-rating"><i class="fa-solid fa-star" style="color:#ffb703;"></i> <? openings = $rating; echo $rating; ?></span>
+                            </div>
+                            <a href="book_detail.php?id=<?php echo $row['id']; ?>" class="btn-bag">View Details</a>
+                        </div>
+                <?php 
+                    }
+                } else {
+                    echo "<p class='text-muted'>No books uploaded yet.</p>";
+                }
+                ?>
             </div>
         </section>
         
@@ -196,60 +219,36 @@ $comp_result = mysqli_query($conn, $comp_query);
             <div class="section-header">
                 <h2>Highly Rated Books</h2>
                 <div class="slider-arrows">
-                    <a href="books.html" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="books.php" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
             <div class="books-grid">
-                <div class="book-card">
-                    <div class="book-cover-wrap"><img src="images/ex1.webp" alt=""></div>
-                    <h4>The Order of Time</h4>
-                    <p class="author">Carlo Rovelli</p>
-                    <div class="rating-price-row">
-                        <span class="book-price">$20.00</span>
-                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.5</span>
-                    </div>
-                    <button class="btn-bag">View Details</button>
-                </div>
-                <div class="book-card">
-                    <div class="book-cover-wrap"><img src="images/ex2.webp" alt=""></div>
-                    <h4>Neverwhere</h4>
-                    <p class="author">Neil Gaiman</p>
-                    <div class="rating-price-row">
-                        <span class="book-price">$25.00</span>
-                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.8</span>
-                    </div>
-                    <button class="btn-bag">View Details</button>
-                </div>
-                <div class="book-card">
-                    <div class="book-cover-wrap"><img src="images/ex3.webp" alt=""></div>
-                    <h4>Ikigai</h4>
-                    <p class="author">Héctor García</p>
-                    <div class="rating-price-row">
-                        <span class="book-price">$26.00</span>
-                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.7</span>
-                    </div>
-                    <button class="btn-bag">View Details</button>
-                </div>
-                <div class="book-card">
-                    <div class="book-cover-wrap"><img src="images/ex4.webp" alt=""></div>
-                    <h4>We Are Not Free</h4>
-                    <p class="author">Traci Chee</p>
-                    <div class="rating-price-row">
-                        <span class="book-price">$26.00</span>
-                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.9</span>
-                    </div>
-                    <button class="btn-bag">View Details</button>
-                </div>
-                <div class="book-card">
-                    <div class="book-cover-wrap"><img src="images/ex5.webp" alt=""></div>
-                    <h4>The Witch</h4>
-                    <p class="author">Salem Author</p>
-                    <div class="rating-price-row">
-                        <span class="book-price">$33.00</span>
-                        <span class="book-rating"><i class="fa-solid fa-star"></i> 4.1</span>
-                    </div>
-                    <button class="btn-bag">View Details</button>
-                </div>
+                <?php 
+                if (mysqli_num_rows($rated_books_result) > 0) {
+                    while ($row = mysqli_fetch_assoc($rated_books_result)) {
+                        $cover = (!empty($row['cover_image'])) ? $row['cover_image'] : 'default_cover.jpg';
+                        $rating = '4.8';
+                ?>
+                        <div class="book-card">
+                            <div class="book-cover-wrap">
+                                <img src="uploads/covers/<?php echo $cover; ?>" alt="Book Cover" onerror="this.src='https://placehold.co/250x300/f26419/ffffff?text=<?php echo urlencode($row['title']); ?>'">
+                            </div>
+                            <h4 style="font-size: 16px; font-weight:800; margin-bottom:4px;"><?php echo htmlspecialchars($row['title']); ?></h4>
+                            <p class="author" style="margin-bottom:8px;">By <?php echo htmlspecialchars($row['author']); ?></p>
+                            <div class="rating-price-row" style="margin-bottom: 12px;">
+                                <span class="book-price <?php echo ($row['price'] == 0) ? 'fr' : ''; ?>">
+                                    <?php echo ($row['price'] == 0) ? 'FREE' : 'Rs. ' . number_format($row['price'], 0); ?>
+                                </span>
+                                <span class="book-rating"><i class="fa-solid fa-star" style="color:#ffb703;"></i> <?php echo $rating; ?></span>
+                            </div>
+                            <a href="book_detail.php?id=<?php echo $row['id']; ?>" class="btn-bag">View Details</a>
+                        </div>
+                <?php 
+                    }
+                } else {
+                    echo "<p class='text-muted'>No books uploaded yet.</p>";
+                }
+                ?>
             </div>
         </section>
 
@@ -260,6 +259,7 @@ $comp_result = mysqli_query($conn, $comp_query);
         
         <div class="comp-grid">
             <?php
+            // Re-running because the variable was overridden below top container
             $comp_query = "SELECT * FROM competitions WHERE status = 'active' ORDER BY id ASC LIMIT 2";
             $comp_result = mysqli_query($conn, $comp_query);
             
@@ -290,212 +290,154 @@ $comp_result = mysqli_query($conn, $comp_query);
         <section class="winners-section">
             <div class="section-container">
                 <h2 class="section-title">Our Proud Winners</h2>
-                <p class="section-subtitle">Pre-register today and prep your drafts! Submit your custom creative story
-                    documents online once the portal officially unlocks next week.</p>
-                <div class="winners-grid">
-                    <div class="winner-card card-tilt-left">
-                        <div class="winner-img-container">
-                            <img src="images/pr2.webp" alt="Current Competition Winner" class="winner-img">
-                        </div>
-                        <div class="winner-info">
-                            <span class="winner-tag tag-current"><i class="fa-solid fa-crown"></i> Current Winner</span>
-                            <h4>Ayan Ahmed</h4>
-                            <p class="winner-achievement">1st Prize - Short Story Contest</p>
-                            <div class="winner-reward-box">
-                                <p class="winner-reward"><strong>Reward:</strong> Featured in Journal Vol. 12 + Cash
-                                    Reward</p>
-                            </div>
-                        </div>
-                    </div>
+                <p class="section-subtitle">Pre-register today and prep your drafts! Submit your custom creative story documents online once the portal officially unlocks next week.</p>
+               <div class="winners-grid">
+<?php
+$winners_query = "SELECT s.*, c.title as comp_title 
+                   FROM submissions s 
+                   LEFT JOIN competitions c ON s.competition_id = c.id 
+                   WHERE s.status IN ('winner', 'runner_up') 
+                   ORDER BY s.status ASC, s.id DESC
+                   LIMIT 2";
+$winners_result = mysqli_query($conn, $winners_query);
 
-                    <div class="winner-card card-tilt-right">
-                        <div class="winner-img-container">
-                            <img src="images/pr1.webp" alt="Previous Competition Winner" class="winner-img">
-                        </div>
-                        <div class="winner-info">
-                            <span class="winner-tag tag-previous"><i class="fa-solid fa-star"></i> Previous
-                                Winner</span>
-                            <h4>Sara Khan</h4>
-                            <p class="winner-achievement">Gold Medal - 3hr Essay Writing</p>
-                            <div class="winner-reward-box">
-                                <p class="winner-reward"><strong>Reward:</strong> Famous Literature Book Set +
-                                    Certificate</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+while ($win = mysqli_fetch_assoc($winners_result)) {
+    $tilt_class = ($win['status'] == 'winner') ? 'card-tilt-left' : 'card-tilt-right';
+    $tag_class = ($win['status'] == 'winner') ? 'tag-current' : 'tag-previous';
+    $tag_icon = ($win['status'] == 'winner') ? 'fa-crown' : 'fa-star';
+    $tag_text = ($win['status'] == 'winner') ? 'Current Winner' : 'Previous Winner';
+    $comp_title = $win['comp_title'] ?? $win['title'];
+?>
+    <div class="winner-card <?php echo $tilt_class; ?>">
+        <div class="winner-img-container">
+            <img src="images/pr22.webp" alt="Competition Winner" class="winner-img">
+        </div>
+        <div class="winner-info">
+            <span class="winner-tag <?php echo $tag_class; ?>"><i class="fa-solid <?php echo $tag_icon; ?>"></i> <?php echo $tag_text; ?></span>
+            <h4><?php echo $win['user_name']; ?></h4>
+            <p class="winner-achievement"><?php echo $comp_title; ?></p>
+            <div class="winner-reward-box">
+                <p class="winner-reward"><strong>Reward:</strong> <?php echo $win['prize'] ?? 'TBA'; ?></p>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+</div>
             </div>
         </section>
 
+           
         <section class="competition-section upcoming-section" style="padding-top: 0;">
     <div class="section-container">
         <h2 class="section-title">Upcoming Competitions</h2>
         <p class="section-subtitle">Prepare your drafts early, sharpen your skills, and get ready to compete with the finest writers for massive prizes and global recognition!</p>
         
         <div class="comp-grid">
+            <?php
+            // 1. Yahan 'launch_date' ki jagah 'starting_date' kar diya hai order karne ke liye
+            $comp_query = "SELECT * FROM competitions WHERE status = 'upcoming' ORDER BY starting_at ASC";
+            $comp_result = mysqli_query($conn, $comp_query);
 
-            <div class="comp-card dynamic-tilt-left">
-                <div class="comp-badge" style="background-color: #f77f00; color: #ffffff;">Starting on June 05, 2026</div>
-                <div class="comp-content">
-                    <h3>G.K &amp; Literature Mega Quiz</h3>
-                    <p class="comp-desc">Test your rapid-fire skills! A fast-paced online quiz covering global literature, famous authors, and core grammar concepts. Accuracy and speed will decide the winner.</p>
+            if (mysqli_num_rows($comp_result) > 0) {
+                $counter = 0;
+                while ($comp = mysqli_fetch_assoc($comp_result)) {
                     
-                    <div class="comp-meta">
-                        <span><i class="fa-regular fa-calendar"></i> <strong>Launch Date:</strong> June 05, 2026</span>
-                        <span><i class="fa-solid fa-trophy"></i> <strong>Prize:</strong> Premium E-Reader &amp; Certificate</span>
-                    </div>
-
-                    <a href="javascript:void(0)" class="comp-btn btn-secondary" style="cursor: not-allowed; background-color: #6c757d; color: #ffffff;">
-                        <i class="fa-solid fa-lock"></i> Registration Opening Soon
-                    </a>
-                </div>
-            </div>
-
-            <div class="comp-card dynamic-tilt-right">
-                <div class="comp-badge" style="background-color: #f77f00; color: #ffffff;">Starting on June 15, 2026</div>
-                <div class="comp-content">
-                    <h3>Novella Chapter Showcase</h3>
-                    <p class="comp-desc">An elite platform for budding authors. Submit the opening chapter of your unpublished book/novella. Top entries get expert mentoring from premium publishers.</p>
+                    // Alternating tilt classes logic
+                    $tilt_class = ($counter % 2 == 0) ? 'dynamic-tilt-left' : 'dynamic-tilt-right';
                     
-                    <div class="comp-meta">
-                        <span><i class="fa-regular fa-calendar"></i> <strong>Launch Date:</strong> June 15, 2026</span>
-                        <span><i class="fa-solid fa-award"></i> <strong>Prize:</strong> Official Contract &amp; Hard Copy Publication</span>
+                    // 2. Yahan bhi '$comp['starting_date']' fetch kiya hai aapke database column ke hisab se
+                    $formatted_date = date("F d, Y", strtotime($comp['starting_at']));
+                    
+                    // Icon Logic
+                    $prize_icon = (isset($comp['prize_type']) && $comp['prize_type'] == 'award') ? 'fa-award' : 'fa-trophy';
+                    
+                    $counter++;
+                    ?>
+                    <div class="comp-card <?php echo $tilt_class; ?>">
+                        <div class="comp-badge" style="background-color: #f77f00; color: #ffffff;">Starting on <?php echo $formatted_date; ?></div>
+                        
+                        <div class="comp-content">
+                            <h3><?php echo htmlspecialchars($comp['title']); ?></h3>
+                            <p class="comp-desc"><?php echo htmlspecialchars($comp['description']); ?></p>
+                            
+                            <div class="comp-meta">
+                                <span><i class="fa-regular fa-calendar"></i> <strong>Launch Date:</strong> <?php echo $formatted_date; ?></span>
+                                <span><i class="fa-solid <?php echo $prize_icon; ?>"></i> <strong>Prize:</strong> <?php echo htmlspecialchars($comp['reward']); ?></span>
+                            </div>
+
+                            <a href="javascript:void(0)" class="comp-btn btn-secondary" style="cursor: not-allowed; background-color: #6c757d; color: #ffffff;">
+                                <i class="fa-solid fa-lock"></i> Registration Opening Soon
+                            </a>
+                        </div>
                     </div>
-
-                    <a href="javascript:void(0)" class="comp-btn btn-secondary" style="cursor: not-allowed; background-color: #6c757d; color: #ffffff;">
-                        <i class="fa-solid fa-lock"></i> Registration Opening Soon
-                    </a>
-                </div>
-            </div>
-
+                    <?php
+                }
+            } else {
+                echo '<div style="grid-column: 1/-1; text-align: center; padding: 40px; background: #ffffff; border-radius: 16px; border: 1px dashed rgba(247, 127, 0, 0.3);">
+                        <i class="fa-solid fa-hourglass-start fa-2x" style="color: #f77f00; margin-bottom: 12px; display:block;"></i>
+                        <h4 style="font-weight: 600; color: #222;">Stay Tuned!</h4>
+                        <p style="color: #6c757d; font-size: 0.9rem; mt-1">We are cooking up some massive challenges for you. Check back soon!</p>
+                      </div>';
+            }
+            ?>
         </div>
     </div>
 </section>
 
-
-
-        <section class="quote-banner">
+       
+<section class="quote-banner">
             <h3>"I do believe something very magical can happen <br> when you read a good book."</h3>
             <p>( J.K - Rowling )</p>
         </section>
 
-        <section class="dealers-section">
-            <div class="section-container">
-                <h2 class="section-title">Find a <span>Dealer</span> Near You</h2>
-                <p class="section-subtitle">Want to skip the shipping wait? Easily connect with our certified
-                    neighborhood hubs to grab official hard copies or audio CDs instantly.</p>
-                <br>
+      <section class="dealers-section">
+    <div class="section-container">
+        <h2 class="section-title">Find a <span>Dealer</span> Near You</h2>
+        <p class="section-subtitle">Want to skip the shipping wait? Easily connect with our certified neighborhood hubs to grab official hard copies or audio CDs instantly.</p>
+        <br>
 
-                <div class="dealers-grid">
+        <div class="dealers-grid">
+            <?php
+            // Database se dealers ka data nikalne ki query 
+            // Humne 'LIMIT 3' lagaya hai taake sirf top 3 dealers hi screen par dikhein
+            $dealer_query = "SELECT * FROM dealers ORDER BY id DESC LIMIT 3";
+            $dealer_result = mysqli_query($conn, $dealer_query);
+
+            if (mysqli_num_rows($dealer_result) > 0) {
+                while ($dealer = mysqli_fetch_assoc($dealer_result)) {
+                    ?>
                     <div class="dealer-card">
                         <div class="dealer-header">
                             <div class="dealer-icon"><i class="fa-solid fa-location-dot"></i></div>
-                            <h4>Downtown Book Center</h4>
+                            <h4><?php echo htmlspecialchars($dealer['name']); ?></h4>
                         </div>
                         <div class="dealer-body">
-                            <p class="dealer-address">Shop #45, Main Commercial Avenue, Block B, Saddar</p>
+                            <p class="dealer-address"><?php echo htmlspecialchars($dealer['address']); ?></p>
                             <div class="dealer-meta-wrapper">
-                                <p class="dealer-contact"><i class="fa-solid fa-phone"></i> <span>+92-21-35551234</span>
+                                <p class="dealer-contact">
+                                    <i class="fa-solid fa-phone"></i> <span><?php echo htmlspecialchars($dealer['phone']); ?></span>
                                 </p>
-                                <p class="dealer-timing"><i class="fa-regular fa-clock"></i> <span>11:00 AM - 09:00
-                                        PM</span></p>
+                                <p class="dealer-timing">
+                                    <i class="fa-regular fa-clock"></i> <span><?php echo htmlspecialchars($dealer['timing']); ?></span>
+                                </p>
                             </div>
                         </div>
                     </div>
-
-                    <div class="dealer-card">
-                        <div class="dealer-header">
-                            <div class="dealer-icon"><i class="fa-solid fa-location-dot"></i></div>
-                            <h4>Universal Publications</h4>
-                        </div>
-                        <div class="dealer-body">
-                            <p class="dealer-address">Plot 12-C, Lane 4, Phase 5, D.H.A.</p>
-                            <div class="dealer-meta-wrapper">
-                                <p class="dealer-contact"><i class="fa-solid fa-phone"></i> <span>+92-21-34445678</span>
-                                </p>
-                                <p class="dealer-timing"><i class="fa-regular fa-clock"></i> <span>10:00 AM - 08:00
-                                        PM</span></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dealer-card">
-                        <div class="dealer-header">
-                            <div class="dealer-icon"><i class="fa-solid fa-location-dot"></i></div>
-                            <h4>Apex Book Stall</h4>
-                        </div>
-                        <div class="dealer-body">
-                            <p class="dealer-address">G-9, Civic Center, Gulshan-e-Iqbal</p>
-                            <div class="dealer-meta-wrapper">
-                                <p class="dealer-contact"><i class="fa-solid fa-phone"></i> <span>+92-21-36669012</span>
-                                </p>
-                                <p class="dealer-timing"><i class="fa-regular fa-clock"></i> <span>12:00 PM - 10:00
-                                        PM</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    <?php
+                }
+            } else {
+                // Agar database khali ho toh layout kharab na ho balki ek pyara sa message aaye
+                echo '<div style="grid-column: 1/-1; text-align: center; padding: 40px; background: #ffffff; border-radius: 12px; border: 1px dashed #ddd; color: #6c757d;">
+                        <i class="fa-solid fa-store-slash fa-2x" style="margin-bottom: 10px; display:block; color: #ccc;"></i>
+                        <p style="font-weight: 500;">No certified dealers found near you at the moment.</p>
+                      </div>';
+            }
+            ?>
+        </div>
+    </div>
+</section>
 
     </div>
-    <footer>
-        <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-logo-side">
-                    <div class="footer-brand">
-
-                        <a href="#" class="brand-logo"><i class="fa-solid fa-book-open logo-icon"></i>Bookish.</a>
-
-                    </div>
-                    <p>Karachi's premier node for digital and physical hard-copy book tracking systems.</p>
-                    <div class="social-icons">
-                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" aria-label="Linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Get in Touch</h4>
-                    <ul>
-                        <li><a href="#"><i class="fa-regular fa-envelope"></i> Contact Support</a></li>
-                        <li><a href="#"><i class="fa-solid fa-map-location-dot"></i> Dealer Hubs</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="#">Competitions</a></li>
-                        <li><a href="#">Forum</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms & Conditions</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 Bookish Systems. All rights reserved. | Crafted with passion for Aptech Terminal Project.
-                </p>
-            </div>
-        </div>
-    </footer>
-
+  <?php include 'footer.php'?>
 </body>
-
 </html>

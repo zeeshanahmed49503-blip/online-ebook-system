@@ -1,19 +1,6 @@
-<?php
-$cookie_lifetime = 10 * 24 * 60 * 60; // 10 Days
-
-    // Modern browsers ke liye path aur security option set karna zaroori hai
-    session_set_cookie_params([
-        'lifetime' => $cookie_lifetime,
-        'path' => '/',               // Poori website par chalega
-        'domain' => '',             // Localhost par khali chordo
-        'secure' => false,          // Agar http:// hai toh false, https:// par true
-        'httponly' => true,         // Security ke liye taake javascript isse touch na kare
-        'samesite' => 'Lax'
-    ]);
-
-    session_start();
-    
+<?php  
 include("auth.php");
+
 $error = '';
 if (isset($_POST['submit'])) {
     $email = trim( $_POST['email']);

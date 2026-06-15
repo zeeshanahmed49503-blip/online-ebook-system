@@ -1,5 +1,4 @@
 <?php
-session_start();
 include("auth.php");
 
 if (!isset($_SESSION['user_id'])) {
@@ -374,6 +373,7 @@ if (isset($_GET['status']) && $_GET['status'] == 'success') {
         </div>
         
     </div>
+    
 
 </body>
 </html>

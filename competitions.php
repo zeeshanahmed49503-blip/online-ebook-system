@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 include('auth.php');
 
 $error = '';       // For Essay
@@ -11,6 +9,11 @@ $user_id = $_SESSION['user_id'] ?? '';
 
 $already_submitted = false;        // Essay status
 $already_submitted_story = false;  // Story status
+
+
+                    $static_query = "SELECT * FROM competitions WHERE id = 1";
+                    $static_result = mysqli_query($conn, $static_query);
+                    $static_row = mysqli_fetch_assoc($static_result);
 
 // Database checks for both competitions
 if (!empty($user_name) && !empty($user_id)) {
@@ -67,10 +70,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['draft_content'])) {
 
         $safe_user_name = mysqli_real_escape_string($conn, $user_name);
         $competition_id = mysqli_real_escape_string($conn, $_POST['competition_id']);
+        $rewardddd = $static_row['reward'];
 
-$insert_query = "INSERT INTO submissions (user_id, user_name, competition_type, competition_id, title, content, file_path) 
-                 VALUES ('$user_id', '$safe_user_name', '$competition_type', '$competition_id', '$title', '$content', '$file_path')";
-        if (mysqli_query($conn, $insert_query)) {
+$insert_query = "INSERT INTO submissions (user_id, user_name, competition_type, competition_id, title, content, file_path, prize) 
+VALUES ('$user_id', '$safe_user_name', '$competition_type', '$competition_id', '$title', '$content', '$file_path', '$rewardddd')";        if (mysqli_query($conn, $insert_query)) {
             echo "<script>
                 localStorage.removeItem('competition_remaining_time');
                 alert('Masterpiece Dispatched Successfully!');
@@ -120,6 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['story_content'])) {
                 $file_path = $target_file;
             }
         }
+        
 
         $safe_user_name = mysqli_real_escape_string($conn, $user_name);
         $competition_id = mysqli_real_escape_string($conn, $_POST['competition_id']);
@@ -766,11 +770,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['story_content'])) {
 
                 </p>
                 <div class="comp-grid">
-                    <?php
-                    $static_query = "SELECT * FROM competitions WHERE id = 1";
-                    $static_result = mysqli_query($conn, $static_query);
-                    $static_row = mysqli_fetch_assoc($static_result);
-                    ?>
+                   
                     <!-- Essay Card -->
                     <div class="comp-card dynamic-tilt-left">
                         <div class="comp-badge status-active"><?php echo $static_row['status']; ?></div>
@@ -884,7 +884,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['story_content'])) {
         <section class="submission-section <?php echo (isset($_POST['draft_content']) && !empty($error)) ? '' : 'workspace-hidden'; ?>" id="workspace">
             <div class="section-container">
                 <div class="submission-box">
-
+<?php
+$upcoming_query = "SELECT essay_topic FROM competitions WHERE id = 1";
+$upcoming_result = mysqli_query($conn, $upcoming_query);
+$urow11 = mysqli_fetch_assoc($upcoming_result);
+?>
                     <div class="submission-header" style="background: linear-gradient(135deg, #111111 0%, #222222 100%); padding: 35px; border-radius: 20px; border: 1px solid rgba(255,107,0,0.2); display: flex; justify-content: space-between; align-items: center; gap: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
                         <div class="header-text-side">
                             <span class="desk-badge" style="background: rgba(255,107,0,0.08); padding: 6px 14px; border-radius: 50px; border: 1px solid rgba(255,107,0,0.25); color: var(--primary-orange); font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px;">
@@ -892,7 +896,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['story_content'])) {
                             </span>
 
                             <h2 class="desk-title" style="font-size: 2.4rem; font-weight: 800; color: #ffffff; margin: 0 0 12px 0; letter-spacing: -0.5px; line-height: 1.2;">
-                                Topic: <span style="background: linear-gradient(to right, #ff6b00, #ff9f43); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Annual Essay Writing Challenge</span>
+                                Topic: <span style="background: linear-gradient(to right, #ff6b00, #ff9f43); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"><?php echo  $urow11['essay_topic'];?></span>
                             </h2>
 
                             <div class="prize-container" style="display: flex; align-items: center; gap: 10px; background: rgba(255, 215, 0, 0.06); border: 1px dashed rgba(255, 215, 0, 0.3); padding: 8px 16px; border-radius: 8px; width: fit-content; margin-bottom: 5px;">
@@ -1102,45 +1106,73 @@ while ($urow = mysqli_fetch_assoc($upcoming_result)) {
         </section>
 
         <!-- ===== WINNERS ===== -->
-        <section class="winners-section">
+     <section class="winners-section">
+    <div class="section-container">
+        <h2 class="section-title">Our Proud Winners</h2>
+        <p class="section-subtitle">
+            Pre-register today and prep your drafts! Submit your custom creative story documents online once the portal officially unlocks next week.
+        </p>
+        
+        <div class="winners-grid">
+        <?php
+        // Query se LIMIT 2 hata diya taaki saare winners/runner-ups dikhein
+        // Aur order pehle Winner ko rakhega phir Runner Up ko
+        $winners_query = "SELECT s.*, c.title as comp_title 
+                          FROM submissions s 
+                          LEFT JOIN competitions c ON s.competition_id = c.id 
+                          WHERE s.status IN ('winner', 'runner_up') 
+                          ORDER BY FIELD(s.status, 'winner', 'runner_up'), s.id DESC";
+        
+        $winners_result = mysqli_query($conn, $winners_query);
 
-            <div class="section-container">
-                <h2 class="section-title">Our Proud Winners</h2>
-                <p class="section-subtitle">Pre-register today and prep your drafts! Submit your custom creative story documents online once the portal officially unlocks next week.
+        if (mysqli_num_rows($winners_result) > 0) {
+            while ($win = mysqli_fetch_assoc($winners_result)) {
+                
+                // Winner aur Runner-up ke liye alag alag design classes aur text
+                if ($win['status'] == 'winner') {
+                    $tilt_class = 'card-tilt-left';
+                    $tag_class  = 'tag-current'; // Winner ke liye apna purana class
+                    $tag_icon   = 'fa-crown';
+                    $tag_text   = '🏆 Current Winner';
+                } else {
+                    $tilt_class = 'card-tilt-right';
+                    $tag_class  = 'tag-previous'; // Runner-up ke liye warning/previous class
+                    $tag_icon   = 'fa-medal';
+                    $tag_text   = '🥈 Runner Up';
+                }
 
-                </p>
-                <div class="winners-grid">
-                    <div class="winner-card card-tilt-left">
-                        <div class="winner-img-container">
-                            <img src="images/pr2.webp" alt="Current Competition Winner" class="winner-img">
-                        </div>
-                        <div class="winner-info">
-                            <span class="winner-tag tag-current"><i class="fa-solid fa-crown"></i> Current Winner</span>
-                            <h4>Ayan Ahmed</h4>
-                            <p class="winner-achievement">1st Prize - Short Story Contest</p>
-                            <div class="winner-reward-box">
-                                <p class="winner-reward"><strong>Reward:</strong> Featured in Journal Vol. 12 + Cash Reward</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="winner-card card-tilt-right">
-                        <div class="winner-img-container">
-                            <img src="images/pr1.webp" alt="Previous Competition Winner" class="winner-img">
-                        </div>
-                        <div class="winner-info">
-                            <span class="winner-tag tag-previous"><i class="fa-solid fa-star"></i> Previous Winner</span>
-                            <h4>Sara Khan</h4>
-                            <p class="winner-achievement">Gold Medal - 3hr Essay Writing</p>
-                            <div class="winner-reward-box">
-                                <p class="winner-reward"><strong>Reward:</strong> Famous Literature Book Set + Certificate</p>
-                            </div>
-                        </div>
+                $comp_title = htmlspecialchars($win['comp_title'] ?? $win['title'] ?? 'Special Competition');
+                $user_name  = htmlspecialchars($win['user_name'] ?? 'Anonymous Writer');
+                $prize      = htmlspecialchars($win['prize'] ?? 'Exciting Goodies & Certificate');
+        ?>
+            <div class="winner-card <?php echo $tilt_class; ?>">
+                <div class="winner-img-container">
+                    <img src="images/pr22.webp" alt="Competition Winner" class="winner-img">
+                </div>
+                <div class="winner-info">
+                    <span class="winner-tag <?php echo $tag_class; ?>">
+                        <i class="fa-solid <?php echo $tag_icon; ?>"></i> <?php echo $tag_text; ?>
+                    </span>
+                    <h4><?php echo $user_name; ?></h4>
+                    <p class="winner-achievement"><?php echo $comp_title; ?></p>
+                    <div class="winner-reward-box">
+                        <p class="winner-reward"><strong>Reward:</strong> <?php echo $prize; ?></p>
                     </div>
                 </div>
             </div>
-        </section>
-
+        <?php 
+            } 
+        } else {
+            // Agar abhi tak koi winner select nahi hua database mein
+            echo "<div class='col-12 text-center'><p class='text-muted'>Abhi tak is competition ke winners announce nahi huye hain.</p></div>";
+        }
+        ?>
+        </div>
+    </div>
+</section>
     </div><!-- end app-container -->
+      <?php include 'footer.php'?>
+
 
     <!-- ✅ FIX 2 & 3: Sirf EK script block, null-safe listener -->
     <script>

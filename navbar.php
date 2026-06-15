@@ -12,6 +12,7 @@ if (session_status() === PHP_SESSION_NONE) {
     .btn-logout { color: #e63946; font-size: 1.1rem; transition: transform 0.2s ease; }
     .btn-logout:hover { transform: scale(1.1); }
 </style>
+<link rel="stylesheet" href="css/style.css">
 
 <header>
     <div class="nav-wrapper">
@@ -19,12 +20,17 @@ if (session_status() === PHP_SESSION_NONE) {
         <nav>
             <ul>
                 <li><a href="index.php">Home</a></li>
-                <li><a href="books.html">Books</a></li>
+                <li><a href="books.php">Books</a></li>
                 <li><a href="competitions.php">Competitions</a></li>
                 <li><a href="dealers.php">Dealers</a></li>
                 <li><a href="contact.php">Contact</a></li>
+                
+                <?php if (isset($_SESSION['name']) && (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin')): ?>
+                    <li><a href="my_books.php" style="color: var(--retro-orange, #f26419); font-weight: 600;"><i class="fa-solid fa-book-bookmark me-1"></i> My Books</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
+        
         <div class="header-actions">
             <?php
             if (isset($_SESSION['name'])) {
@@ -32,13 +38,6 @@ if (session_status() === PHP_SESSION_NONE) {
                     ?>
                     <a href="admin/dashboard.php" class="btn btn-admin" title="Admin Dashboard" style="background-color: #d9534f; color: white;">
                         <i class="fa-solid fa-user-shield"></i> Admin Panel
-                    </a>
-                    <?php
-                } else {
-                    ?>
-                    <a href="cart.php" class="btn btn-icon" title="Cart">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <span class="cart-badge">0</span>
                     </a>
                     <?php
                 }

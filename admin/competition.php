@@ -1,8 +1,5 @@
 <?php
-session_start();
 include '../auth.php';
-
-
 $error = ''; 
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -137,19 +134,51 @@ if (isset($_POST['deploy_competition_btn'])) {
 
 <body>
 
-    <aside class="sidebar">
-        <div class="brand-title">
-            <i class="fa-solid fa-book-open me-2"></i> E-Book Admin
-        </div>
-        <nav class="nav flex-column">
-            <a class="nav-link" href="#"><i class="fa-solid fa-plus-circle"></i> Add New Book</a>
-            <a class="nav-link" href="viewBooks.php"><i class="fa-solid fa-book"></i> View All Books</a>
-            <a class="nav-link" href="#"><i class="fa-solid fa-shopping-cart"></i> Manage Orders</a>
-            <a class="nav-link" href="#"><i class="fa-solid fa-users"></i> Book Dealers</a>
-            <a class="nav-link active" href="competition.php"><i class="fa-solid fa-trophy"></i>Competitions</a>
-            <a class="nav-link text-danger mt-5" href="logout.php"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
-        </nav>
-    </aside>
+  <aside class="sidebar">
+    <div class="brand-title">
+        <i class="fa-solid fa-book-open me-2"></i> E-Book Admin
+    </div>
+    <nav class="nav flex-column">
+        <a class="nav-link" href="dashboard.php">
+            <i class="fa-solid fa-plus-circle"></i> Add New Book
+        </a>
+        
+        <a class="nav-link" href="viewBooks.php">
+            <i class="fa-solid fa-book"></i> View All Books
+        </a>
+        
+        <a class="nav-link" href="manage_orders.php">
+            <i class="fa-solid fa-shopping-cart"></i> Manage Orders
+        </a>
+        
+        <a class="nav-link" href="view_dealers.php">
+            <i class="fa-solid fa-users"></i> Book Dealers
+        </a>
+        <a class="nav-link" href="dealers.php">
+            <i class="fa-solid fa-users"></i> Add Dealers
+        </a>
+         <a class="nav-link" href="competition.php">
+            <i class="fa-solid fa-trophy"></i>Add Competitions
+        </a>
+        
+        <a class="nav-link" href="view_competition.php">
+            <i class="fa-solid fa-trophy"></i> Competitions Board
+        </a>
+        
+        
+        <a class="nav-link" href="winners.php">
+            <i class="fa-solid fa-award"></i> Winners Board
+        </a>
+
+        <a class="nav-link" href="contact_problems.php">
+            <i class="fa-solid fa-envelope-open-text"></i> Contact & Problems
+        </a>
+        
+        <a class="nav-link text-danger mt-5" href="logout.php">
+            <i class="fa-solid fa-sign-out-alt"></i> Logout
+        </a>
+    </nav>
+</aside>
 
     <main class="main-content">
         
