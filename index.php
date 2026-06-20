@@ -111,11 +111,133 @@ $rated_books_result = mysqli_query($conn, $rated_books_query);
             transform: translate(1px, 1px);
             box-shadow: 1px 1px 0px var(--primary-dark, #000);
         }
+        /* Main Full-Screen Overlay Container */
+.intro-preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 999999;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+/* Base Style for all layers */
+.slider-layer {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  /* Ultra-smooth cinematic bezier curve */
+  transition: transform 1.1s cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+/* --- LAYER INITIAL STATES --- */
+
+/* Main Layer: Yeh page load hote hi screen block rakhegi */
+.layer-main {
+  background-color: #121212; /* Matte Black (Website hides behind this) */
+  left: 0;
+  z-index: 5;
+}
+
+/* Baaki 4 layers shuru me screen ke left se baahar rahengi */
+.layer-1 { background-color: #000000; left: -100%; z-index: 100; } /* Pure Black */
+.layer-2 { background-color: #1a1a1a; left: -100%; z-index: 101; } /* Dark Grey */
+.layer-3 { background-color: #333333; left: -100%; z-index: 102; } /* Light Grey */
+.layer-4 {
+     background-color: #ff6b00;
+      left: -100%;
+       z-index: 103;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+    } /* Premium Orange */
+    .layer-4 h2{
+ font-size: 25px;
+    font-family: 'italic';
+    font-weight: 800;
+    animation: animmm 5s;
+    color:white;
+    }
+    @keyframes animmm{
+        0%{
+            scale: 1;
+        }
+        100%{
+            scale: 3;
+        }
+    }
+
+
+/* --- 1. ENTRANCE STATE (Ek-ek kar ke left se andar aana) --- */
+.intro-preloader.active .layer-1,
+.intro-preloader.active .layer-2,
+.intro-preloader.active .layer-3,
+.intro-preloader.active .layer-4 {
+  transform: translateX(100%); /* Screen ke andar slide in */
+}
+
+/* Staggered delay taake ek ke baad ek layers aati hui dikhein */
+.intro-preloader.active .layer-1 { transition-delay: 0.0s; }
+.intro-preloader.active .layer-2 { transition-delay: 0.15s; }
+.intro-preloader.active .layer-3 { transition-delay: 0.3s; }
+.intro-preloader.active .layer-4 { transition-delay: 0.45s; }
+
+
+/* --- 2. EXIT STATE (Saari layers ka ek sath/ya sequence me right side nikalna) --- */
+/* Jab exit hoga, saari ki saari right side baahar stretch ho jayengi */
+.intro-preloader.exit .slider-layer {
+  transform: translateX(200%); 
+}
+
+/* Main layer ko hum transform direct denge kyunki woh left: 0 par thi */
+.intro-preloader.exit .layer-main {
+  transform: translateX(100%);
+  transition-delay: 0.6s; /* Sabse aakhir me main layer niklegi */
+}
+
+/* Baaki layers ka exit delay taake smooth transition se screen clear ho */
+.intro-preloader.exit .layer-1 { transition-delay: 0.0s; }
+.intro-preloader.exit .layer-2 { transition-delay: 0.15s; }
+.intro-preloader.exit .layer-3 { transition-delay: 0.3s; }
+.intro-preloader.exit .layer-4 { transition-delay: 0.45s; }
     </style>
 </head>
 
 <body>
 <?php include 'navbar.php'; ?>
+<div class="intro-preloader">
+  <div class="slider-layer layer-main"></div> <div class="slider-layer layer-1"></div>
+  <div class="slider-layer layer-2"></div>
+  <div class="slider-layer layer-3"></div>
+  <div class="slider-layer layer-4"><h2>Bookish</h2></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const preloader = document.querySelector('.intro-preloader');
+  
+  // 1. Page khulte hi baaki layers left se andar aana shuru ho jayengi
+  setTimeout(() => {
+    preloader.classList.add('active');
+  }, 50);
+
+  // 2. 2.5 Seconds ka hold time taake sweep effect poora dikhe
+  setTimeout(() => {
+    preloader.classList.remove('active');
+    preloader.classList.add('exit'); // Saari layers main layer ke sath right side nikal jayengi
+    
+    // 3. Poora transition khatam hone par preloader remove
+    setTimeout(() => {
+      preloader.style.display = 'none';
+    }, 1800); // Cascading delay aur animation duration ko safe handle karne ke liye
+    
+  }, 2200); 
+});
+</script>
     <div class="app-container">
         <section class="retro-hero">
             <div class="hero-content-wrapper">
@@ -255,7 +377,7 @@ $rated_books_result = mysqli_query($conn, $rated_books_query);
          <section class="competition-section">
     <div class="section-container">
         <h2 class="section-title">Ongoing Competitions</h2>
-        <p class="section-subtitle">Join our exciting writing contests!</p>
+        <p class="section-subtitle">Unleash your inner writer! Participate in our exciting writing contests to showcase your creative skills, compete with the finest minds ...</p>
         
         <div class="comp-grid">
             <?php
